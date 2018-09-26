@@ -34,12 +34,13 @@
  
   * Controles
   * Entornos
+  * Modos de Partida(provisional)
   * Mecánicas
   * Personajes
   * Objetos
   * Obstáculos
   
- **3.Interfaz**
+ **3.Interfaz y Funcionalidad**
  
   * Diagrama de Flujo
   * Menú Principal
@@ -48,6 +49,8 @@
   * Menú de confirmación de partida
   * Pantalla de partida
   * Pantalla de resultados finales
+  * Chat(provisional)
+  
   
   **4.Estilo Visual**
   
@@ -108,12 +111,22 @@ El juego estará hecho de manera que añadir vehículos y pistas nuevas sea una 
 
 Las carreras tendrán lugar en diferentes pistas , las cuales siempre seran inclinadas y tendrán obstáculos y estructuras diferentes.
  
- 
+
+**Modos de Partida:**(provisional)
+
+Se añadirán modos de partida adicionales y se describirán todos a continuación :
+
+* Búsqueda Aleatoria : Se buscaran jugadores conectados al juegos en el momento
+* Creación de Partida : Un jugador podrá dar un nombre a una partida y pasará a espera de otros jugadores 
+* Búsqueda de Partida : Uno o varios jugadores podrán introducir un nombre de partida y se comprobará que esa partida existe , acto seguido si aún faltan jugadores para esa partida quedarán en espera
+* Revancha : Si al final de una partida los cuatro jugadores de la partida seleccionan la opción de revancha volverán a la pantalla de confirmación de la partida , mientras esperan a que se decida la revancha quedarán en espera en la misma pantalla de resultados
+
+
 **Mecánicas:**
 
 * Desplazamiento: La mecánica principal del juego es el desplazamiento , cada vehículo podrá desplazarse solo en una franja visible de la pista junto a los demás participantes y no podrá salirse de esta en ningún momento salvo en el caso de que se salga por alguno de los laterales del circuito , caiga al vacio o pierda todos sus puntos de vida. Dentro de esta franja podrá disminuir o aumentar brevemente su velocidad para adelantar a los adversarios y girar hacia la derecha o la izquierda con el objetivo de esquivar obstáculos o embestir otros coches.
 
-* Puntuación: La puntuación determina el ganador de la carrera y dependerá tanto de la posición en la que cada corredor cruce la meta y del estado de su vehículo (o sus puntos de vida) al llegar a esta.
+* Puntuación: La puntuación determina el ganador de la carrera y dependerá tanto de la posición en la que cada corredor cruce la meta y del estado de su vehículo (o sus puntos de vida) al llegar a esta. Tendrá más peso la posición que el estado del vehículo para ceñirnos un poco más al género del juego.
 
 * Puntos de vida: Los puntos de vida vendrán determinados según el tipo de vehículo y se verán afectados al recibir daño ya sea mediante un impacto con un obstáculo o con otro jugador.
 
@@ -125,7 +138,7 @@ Las carreras tendrán lugar en diferentes pistas , las cuales siempre seran incl
 
 * Fin de la Partida: Cada partida finalizará cuando todos los jugadores hayan cruzado la meta o bien no tengan más puntos de vida disponibles , tras calcular los puntos de cada uno se creará una tabla de puntuaciones de mayor a menor para determinar al ganador. 
 
-*Puntuación:Se calcula a partir del porcentaje de vida con el que se llega la meta más la posición en la que se llega.
+
 
 **Personajes(vehículos)**
 Los personajes en este juego son los distintos vehículos disponibles. Cada vehículo dispondrá de una pequeña descripción sobre su origen y unas estadísticas propias en la siguiente versión de este documento.
@@ -165,7 +178,9 @@ Los obstáculos aquí descritos son provisionales , en un futuro podrán añadir
  
 **Diagrama de Flujo:**
 
-![DiagramadeFlujo](https://user-images.githubusercontent.com/43405811/45928390-fbea8e80-bf42-11e8-92ac-393666b07d05.png)
+![DiagramadeFlujo](https://user-images.githubusercontent.com/43405811/46070422-1197c800-c17e-11e8-8cd3-308402d49a78.png)
+
+*Se han añadido nuevas pantallas y funcionalidades , visitar el punto 2.Jugabilidad*
 
 
 **Menú Principal**
@@ -193,10 +208,14 @@ Los obstáculos aquí descritos son provisionales , en un futuro podrán añadir
   ![MenúdeSeleccióndeVehículo](https://user-images.githubusercontent.com/43405811/45929966-17609400-bf59-11e8-9916-a2ee2778f345.png)
   
   
-  * Pantalla de resultados finales
+  **Pantalla de resultados finales**
 
-![MenúdeSeleccióndeVehículo](https://user-images.githubusercontent.com/43405811/45929974-3a8b4380-bf59-11e8-936d-531a63e84ab5.png)
+![MenúdeSeleccióndeVehículo](https://user-images.githubusercontent.com/43405811/46071885-51ac7a00-c181-11e8-881f-78a1c6821bf0.png)
 
+
+**Chat**
+
+Se implementará un chat para ayudar a los jugadores a gestionar sus partidas , este chat no estará activo cuando un jugador se encuentra activo en una partida.
 
 
 ## 4.Estilo Visual:
