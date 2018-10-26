@@ -25,7 +25,7 @@ JesusTakeTheWheel.menuState.prototype = {
 
     update: function() {
     if(clicked){
-    game.state.start('levelState')
+    game.state.start('levelState');
     }
     }
 
