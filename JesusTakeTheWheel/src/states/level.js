@@ -4,6 +4,8 @@ JesusTakeTheWheel.levelState = function(game) {
 var BOMBAS; //Colisión de grupo para los objetos del nivel 
 var VALLAS; 
 var ACELERADORES;
+var CORAZONES;
+var BLANCAS;
 var cursors;//Variable para los cursores de cntrol
 var map;//Variable para el mapa de colisiones
 var layer;//Variable para la capa del mapa de colisiones del mapa (el implementado arriba)
@@ -11,6 +13,9 @@ var map2;
 var layer2; 
 var player; //Variable jugador
 var firstangle; //Variable que detecta el angulo inicial del jugador
+var muerto;
+var ganado;
+var muertepor = "nada";
 
 var gravity = [ //Array multidimensional para guardar la aceleración de la gravedad en las distintas partes del circuito
 [0,400],
@@ -80,7 +85,6 @@ var porcentajedaño = 25; //Cuantos puntos de daño recibe el jugador en cada go
 var recorrido; //Guarda la posicion en el eje y del jugador al morir para saber cuanto ha recorrido
 var timer; //Guarda el tiempo en milisegundos del jugador al morir o al llegar a la meta para saber cuanto ha tardado
 var next = false; //Variable de apoyo que sirve para que las colisiones no se vuelvan locas 
-var nextValla = false;
 var nextAcelerador = false;
 
 
@@ -88,6 +92,62 @@ var nextAcelerador = false;
 var timeDisplay; //Variable donde esta el timer 
 var total = 0; // Total en segundos del tiempo en milisegundos del timer 
 var minutos = 0; //Total en minutos del tiempo en milisegundos del timer 
+
+function isOver(){ //Termina el juego y pasa al siguiente estado 
+    recorrido = player.body.position.y; 
+    timer = this.game.time.totalElapsedSeconds();
+    game.state.start('resultsState');
+}
+
+function hitBomba(player,bomba){
+    if(bomba.frame == 0 ){
+        muertepor = "bomba";
+        muerto = true; 
+        
+        bomba.kill();
+       
+        isOver();
+        
+        
+    }
+    
+    
+}
+function hitValla(player,valla){
+    if(valla.frame == 0 ){
+        console.log("Valla!");
+        nextValla = true; 
+        wallHits++;
+        valla.kill();
+    }
+   
+}
+
+function hitCorazon(player,corazon){
+    if(corazon.frame == 0 ){
+        console.log("Corazon!");
+        if(wallHits > 0){
+            wallHits--;
+        }
+        corazon.kill();
+    }
+}
+
+
+function hitAcelerador(){
+    if(!nextAcelerador){
+    nextAcelerador = true; 
+    console.log("Acelerador!");
+    player.body.velocity.y = velpunta;
+    }
+}
+
+function hitMeta(){
+    console.log("Meta!");
+    recorrido = player.body.position.y;
+    timer = this.game.time.totalElapsedSeconds();
+    setTimeout( isOver(), 5000);
+}
 
 
 //Los controles que me han costado la vida 
@@ -99,9 +159,11 @@ var minutos = 0; //Total en minutos del tiempo en milisegundos del timer
        player.body.position.x +=5;
        player.body.position.y -= 1.5;
         if(player.angle > firstangle){
+            player.animations.play('recto');
            player.angle = firstangle;
        }
        if(player.angle > maxangleright){
+        player.animations.play('derecha');
        player.angle -=1
        }
    }
@@ -110,9 +172,11 @@ var minutos = 0; //Total en minutos del tiempo en milisegundos del timer
        player.body.position.y -= 1.5;
        
        if(player.angle < firstangle){
+        player.animations.play('recto');
            player.angle = firstangle;
        }
         if(player.angle < maxangleleft){
+            player.animations.play('izquierda');
            player.angle +=1;
            }
    }
@@ -124,9 +188,11 @@ var minutos = 0; //Total en minutos del tiempo en milisegundos del timer
    {
        player.body.position.x -=5;
         if(player.angle < firstangle){
+            player.animations.play('recto');
            player.angle = firstangle;
        }
         if(player.angle < maxangleleft){
+            player.animations.play('izquierda');
            player.angle +=1;
            }
    }
@@ -134,17 +200,34 @@ var minutos = 0; //Total en minutos del tiempo en milisegundos del timer
    {
        player.body.position.x +=5;
         if(player.angle > firstangle){
+            player.animations.play('recto');
            player.angle = firstangle;
        }
        if(player.angle > maxangleright){
+        player.animations.play('derecha');
        player.angle -=1
        }
    } 
    if(cursors.down.isDown)
    {
+    player.angle = firstangle;
+    player.animations.play('recto');
      player.body.velocity.y += 300;
    }
   
+ }
+
+ function checkSpeed(){
+     if(player.body.velocity.y < 800 ){
+         caida();
+     }
+ 
+    }
+ function caida(){
+    muerto = true; 
+    muertepor = "caida";
+  
+    isOver();
  }
 
 //Inicia la gravedad y pone el mapa de colisiones con la pista 
@@ -156,7 +239,7 @@ function initPhysics () {
    game.physics.arcade.gravity.x = subgravity[0];
    pos++; //Pone a pos en 1 para que en updateGravity empiece por la segunda gravedad 
 
-   game.world.setBounds(0,0,10000,10000); //Pone bordes al mundo para que sea mas grande que la ventana de vista 
+   game.world.setBounds(0,0,10000,360000); //Pone bordes al mundo para que sea mas grande que la ventana de vista 
 
    //Mapa de colisiones
    map = game.add.tilemap('mapatest',20,20); //Añade a map (declarado en global) un tilemap que ya hemos cargado
@@ -165,11 +248,45 @@ function initPhysics () {
    map.setCollisionBetween(3,3); //Pone la colisión entre 3 y 3 , es decir , en el tile numero 3 del tileset que son
    //los cuadraditos rosa 
 
-   map2 = game.add.tilemap('obstaculos',20,20); //Añade a map (declarado en global) un tilemap que ya hemos cargado
-   map2.addTilesetImage('tiletest'); //Añade el tileset 
-   layer2 = map2.createLayer(0); //Mete en layer una capa creada en el mapa (capa 0)
-   map2.setCollisionBetween(0,0); //Pone la colisión entre 3 y 3 , es decir , en el tile numero 3 del tileset que son
-   //los cuadraditos rosa 
+   map.setTileIndexCallback(6, isOver, this);
+   map.setTileIndexCallback(4,checkSpeed,this);
+   map.setTileIndexCallback(8,hitMeta,this);
+   
+   
+
+   map2 = game.add.tilemap('mapabombas',20,20);
+   map2.addTilesetImage('tiletest');
+   layer2 = map2.createLayer(0);
+   
+   
+   
+    ACELERADORES = game.add.physicsGroup();
+    map2.createFromTiles(1,-1,'aceleradorSprite',layer2,ACELERADORES);
+    ACELERADORES.setAll('enableBody' , true); 
+    ACELERADORES.setAll('body.immovable',true);
+    ACELERADORES.setAll('body.moves',false);
+
+   BOMBAS = game.add.physicsGroup();
+   map2.createFromTiles(0,-1,'bombasprite',layer2,BOMBAS);
+   BOMBAS.setAll('enableBody' , true); 
+   BOMBAS.setAll('body.immovable',true);
+   BOMBAS.setAll('body.moves',false);
+    
+    VALLAS = game.add.physicsGroup();
+    map2.createFromTiles(10,-1,'vallaIzquierdaSprite',layer2,VALLAS);
+    map2.createFromTiles(11,-1,'vallaMitadSprite',layer2,VALLAS);
+    map2.createFromTiles(13,-1,'vallaDerechaSprite',layer2,VALLAS);
+    VALLAS.setAll('enableBody' , true); 
+    VALLAS.setAll('body.immovable',true);
+    VALLAS.setAll('body.moves',false);
+
+    CORAZONES = game.add.physicsGroup();
+    map2.createFromTiles(7,-1,'corazonSprite',layer2,CORAZONES);
+    CORAZONES.setAll('enableBody' , true); 
+    CORAZONES.setAll('body.immovable',true);
+    CORAZONES.setAll('body.moves',false);
+
+
 
 }
 //Crea los controles
@@ -179,54 +296,24 @@ cursors = game.input.keyboard.createCursorKeys();
 //Inicia toodo lo que tenga que ver con el jugador 
 function initPlayer(){
 
-   player = game.add.sprite(600, 20, 'arrowsprite',0); //Le da un sprite en la posición 600,20 , con el tile 0 del tileset arrowsprite 
+   player = game.add.sprite(600, 20, 'racersprite',0); //Le da un sprite en la posición 600,20 , con el tile 0 del tileset arrowsprite 
    player.anchor.set(0.5);//Pone el punto de referencia del sprite en el centro 
    game.physics.arcade.enable(player); //Activa las fisicas para el jugador
-   player.body.bounce.set(0.0001); //Le da bounce al cuerpo , no se si se va a quedar asi 
+   player.body.bounce.set(0.001); //Le da bounce al cuerpo , no se si se va a quedar asi 
    player.body.tilePadding.set(32); //Ni zorra de que es esto 
    player.body.drag = (25); //Añade rozamiento al cuerpo 
    player.body.allowRotation = true; //Permite la rotación de body 
    firstangle = player.body.angle; //Toma el primer ángulo con el que aparece el jugador y lo guarda para futura referencia
-   
+   player.animations.add('recto',[0,8],10,true);
+   player.animations.add('derecha',[2,10],10,true);
+   player.animations.add('izquierda',[1,9],10,true);
+   player.animations.play('recto');
   
 }
-
-function initObstaculos(){
-    
-    BOMBAS = game.add.physicsGroup();//Añade el grupo de los objetos del juego
-
-    for(var i = 0; i < templateBombas.length; i++) { //Crea estos objetos según el array de template y los añade a group
-     var subtemplateBombas = templateBombas[i];
-     
-         var bomba = BOMBAS.create(subtemplateBombas[0],subtemplateBombas[1], 'tilesetextract',0);
-         bomba.body.enable = true;
-         bomba.body.immovable = true;
-         bomba.body.moves = false;
-    }
-
-    VALLAS = game.add.physicsGroup();
-
-    for(var i = 0; i < templateVallas.length; i++) { //Crea estos objetos según el array de template y los añade a group
-        var subtemplateVallas = templateVallas[i];
-        
-            var valla = VALLAS.create(subtemplateVallas[0],subtemplateVallas[1], 'tilesetextract',2);
-            valla.body.enable = true;
-            valla.body.immovable = true;
-            valla.body.moves = false;
-       }
-
-    ACELERADORES = game.add.physicsGroup();
-
-    for (var i = 0 ; i < templateAceleradores.length; i++){
-        var subtemplateAceleradores = templateAceleradores[i];
-
-            var acelerador = ACELERADORES.create(subtemplateAceleradores[0], subtemplateAceleradores[1], 'tilesetextract', 1);
-            acelerador.body.enable = true;
-            acelerador.body.inmovable = true;
-            acelerador.body.moves = false;
-    }
+function initOBstaculos(){
 
 }
+
 //Actualizacion de hacia donde va la gravedad 
 function updateGravity(){
    var subgravity = gravity[pos]; //Hace lo mismo que en initPhysics , podria llamarlo desde alli y ahorrarme el codigo
@@ -234,9 +321,7 @@ function updateGravity(){
    game.physics.arcade.gravity.x = subgravity[0];
    pos++;
 }
-function isOver(){ //Termina el juego y pasa al siguiente estado 
-    game.state.start('resultsState');
-}
+
 //Checkeamos en que altura va el coche 
 function checkY(y){ //Cada vez que detecta que has llegado a cierto punto de y actualiza la gravedad 
 if (y >= 500 && check0 == false){
@@ -310,7 +395,9 @@ function checkColision(){ //Comprueba si te la has pegado , si no te la has pega
 }
 function checkDaño(){ //Mira cuanto daño te has hecho , si tienes 4 golpes mueres 
 if (wallHits ==4){
-   timer = this.game.time.totalElapsedSeconds();
+    muertepor = "golpes";
+    muerto = true; 
+   
    isOver();
 }
 }
@@ -323,18 +410,6 @@ function updateCounter(){ //Función que se llama cada vez que displayTimer lleg
     }
 }
 
-function hitBomba(){
-    timer = this.game.time.totalElapsedSeconds();
-    isOver();
-}
-
-function hitValla(){
-    wallHits++;
-}
-
-function hitAcelerador(){
-    player.body.velocity.y = velpunta;
-}
 
 
 
@@ -347,7 +422,7 @@ JesusTakeTheWheel.levelState.prototype = {
         initPhysics();
        initInput();
        initPlayer();
-       initObstaculos();
+       //initObstaculos();
        game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON); //Indicamos a la camara que siga a player 
 
        //Creamos el timer 
@@ -363,7 +438,7 @@ JesusTakeTheWheel.levelState.prototype = {
        
        movePlayerDown(); // llama a los controles
        checkVel(); //Comprueba la velocidad 
-       checkY(player.position.y); //Comprueba la posición
+       //checkY(player.position.y); //Comprueba la posición
        checkColision(); //Comprueba la colisión 
        checkDaño(); //Comprueba el daño
 
@@ -372,29 +447,14 @@ JesusTakeTheWheel.levelState.prototype = {
        game.debug.text(':'+total, 64, 32 );
        game.debug.text(minutos, 32,32 );
 
-
-       //Comprueba la colisión con el grupo 
-      if ( game.physics.arcade.collide(player,BOMBAS)){
-          hitBomba();
-      }
-
-      if(!game.physics.arcade.overlap(player,VALLAS)){
-          nextValla = true;
-      }
-
-      if ( game.physics.arcade.overlap(player,VALLAS)&& nextValla){
-        nextValla = false;
-        hitValla();
+      game.physics.arcade.overlap(player,BOMBAS,hitBomba,null,this);
+       game.physics.arcade.overlap(player,VALLAS,hitValla,null,this);
+       game.physics.arcade.overlap(player,CORAZONES,hitCorazon,null,this);
+    if(!(game.physics.arcade.overlap(player,ACELERADORES))){
+        nextAcelerador = false; 
     }
-    
-    if(!game.physics.arcade.overlap(player,ACELERADORES)){
-        nextAcelerador = true;
-    }
-
-    if ( game.physics.arcade.overlap(player,ACELERADORES)&& nextValla){
-      nextAcelerador = false;
-      hitAcelerador();
-  }
+     game.physics.arcade.overlap(player,ACELERADORES,hitAcelerador,null,this);
+       
   
        
    },
