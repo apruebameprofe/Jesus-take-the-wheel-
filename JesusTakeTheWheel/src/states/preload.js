@@ -13,7 +13,7 @@ JesusTakeTheWheel.preloadState.prototype = {
             fill: "#ff0044",
             align: "center"
         };
-        var t = game.add.text(game.world.centerX - 300, 0, text, style);
+        var t = game.add.text(game.world.centerX - 350, 0, text, style);
 
        
         game.load.spritesheet('racersprite','../assets/images/Racer.png',40,40);
@@ -32,6 +32,14 @@ JesusTakeTheWheel.preloadState.prototype = {
         game.load.image('tiletest','../assets/images/firstprops.png');
         game.load.image('startbuttonsprite','../assets/images/start.png');
         game.load.image('flecha','../assets/images/flecha.png');
+        game.load.spritesheet('opcionespersonaje','../assets/images/opcionespersonaje.png',200,100);
+        game.load.spritesheet('opcionespista','../assets/images/opcionespista.png',200,100);
+
+        game.load.tilemap('mapatest1','../assets/Pista 2/Mapa2._Bumper.csv');
+        game.load.tilemap('mapabombas1','../assets/Pista 2/Mapa2._Bombas.csv');
+
+        game.load.tilemap('mapatest2','../assets/Pista3/Mapa3._bumper.csv');
+        game.load.tilemap('mapabombas2','../assets/Pista3/Mapa3._bombas.csv');
         
        
        
