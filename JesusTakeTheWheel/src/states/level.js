@@ -16,6 +16,13 @@ var firstangle; //Variable que detecta el angulo inicial del jugador
 var muerto;
 var ganado;
 var muertepor = "nada";
+var charSelect; 
+var charArray = [
+    [],
+    [0,1,2,8,9,10],
+    [3,4,5,11,12,13],
+    [16,17,18,24,25,26],
+];
 
 var gravity = [ //Array multidimensional para guardar la aceleración de la gravedad en las distintas partes del circuito
 [0,400],
@@ -35,34 +42,10 @@ var pos = 0;
 //Template y subtemplate funcionan parecido a gravedad , template contiene las posiciones de los objetos de la escena
 //Subtemplate es una variable de apoyo para recorrer template 
 
-var templateBombas = [
-[550,300],
-[570,300],
-[590,300],
-[610,300],
-[300,800],
-[100,1000],
-];
 
-var templateVallas = [
-    [590,500],
-    [610,500],
-    [630,500],
-    [650,500],
-    [300,800],
-    [100,1000],
-    ];
-
-var templateAceleradores = [
-    [990,800],
-    [1010,800],
-    [1030,800],
-    [1050,800],
-
-];
 
 //Velocidad punta ( o maxima , porque en fin la vida)  y velocidad minima para que el drag no me frene del todo 
-var velpunta = 900;
+var velpunta ;
 var velmin = 400;
 //Lo máximo que puede rotar el jugador mientras gira 
 var maxangleright = -25;
@@ -80,7 +63,8 @@ var check7 = false;
 
 var wallHits = 0 ;//Numero de golpes que se ha pegado el jugador
 var daño = 0 ; //Daño acumulado del jugador 
-var porcentajedaño = 25; //Cuantos puntos de daño recibe el jugador en cada golpe 
+var porcentajedaño = 25; //Cuantos puntos de daño recibe el jugador en cada golpe
+var maxHits;  
 
 var recorrido; //Guarda la posicion en el eje y del jugador al morir para saber cuanto ha recorrido
 var timer; //Guarda el tiempo en milisegundos del jugador al morir o al llegar a la meta para saber cuanto ha tardado
@@ -91,11 +75,14 @@ var nextAcelerador = false;
 
 var timeDisplay; //Variable donde esta el timer 
 var total = 0; // Total en segundos del tiempo en milisegundos del timer 
-var minutos = 0; //Total en minutos del tiempo en milisegundos del timer 
+var minutos = 0; //Total en minutos del tiempo en milisegundos del timer
+
+var countdown;
+var countdownEvent; 
 
 function isOver(){ //Termina el juego y pasa al siguiente estado 
     recorrido = player.body.position.y; 
-    timer = this.game.time.totalElapsedSeconds();
+    timer = this.game.time.totalElapsedSeconds()-3;
     game.state.start('resultsState');
 }
 
@@ -145,7 +132,7 @@ function hitAcelerador(){
 function hitMeta(){
     console.log("Meta!");
     recorrido = player.body.position.y;
-    timer = this.game.time.totalElapsedSeconds();
+    timer = this.game.time.totalElapsedSeconds()-3;
     setTimeout( isOver(), 5000);
 }
 
@@ -218,7 +205,7 @@ function hitMeta(){
  }
 
  function checkSpeed(){
-     if(player.body.velocity.y < 800 ){
+     if(player.body.velocity.y < velpunta-50 ){
          caida();
      }
  
@@ -248,7 +235,7 @@ function initPhysics () {
    map.setCollisionBetween(3,3); //Pone la colisión entre 3 y 3 , es decir , en el tile numero 3 del tileset que son
    //los cuadraditos rosa 
 
-   map.setTileIndexCallback(6, isOver, this);
+   map.setTileIndexCallback(6, caida, this);
    map.setTileIndexCallback(4,checkSpeed,this);
    map.setTileIndexCallback(8,hitMeta,this);
    
@@ -295,8 +282,8 @@ cursors = game.input.keyboard.createCursorKeys();
 }
 //Inicia toodo lo que tenga que ver con el jugador 
 function initPlayer(){
-
-   player = game.add.sprite(600, 20, 'racersprite',0); //Le da un sprite en la posición 600,20 , con el tile 0 del tileset arrowsprite 
+   var subchar = charArray[charSelect];
+   player = game.add.sprite(600, 20, 'racersprite',subchar[0]); //Le da un sprite en la posición 600,20 , con el tile 0 del tileset arrowsprite 
    player.anchor.set(0.5);//Pone el punto de referencia del sprite en el centro 
    game.physics.arcade.enable(player); //Activa las fisicas para el jugador
    player.body.bounce.set(0.001); //Le da bounce al cuerpo , no se si se va a quedar asi 
@@ -304,10 +291,12 @@ function initPlayer(){
    player.body.drag = (25); //Añade rozamiento al cuerpo 
    player.body.allowRotation = true; //Permite la rotación de body 
    firstangle = player.body.angle; //Toma el primer ángulo con el que aparece el jugador y lo guarda para futura referencia
-   player.animations.add('recto',[0,8],10,true);
-   player.animations.add('derecha',[2,10],10,true);
-   player.animations.add('izquierda',[1,9],10,true);
+   player.animations.add('recto',[subchar[0],subchar[3]],10,true);
+   player.animations.add('derecha',[subchar[2],subchar[5]],10,true);
+   player.animations.add('izquierda',[subchar[1],subchar[4]],10,true);
    player.animations.play('recto');
+   player.body.moves = false;
+   
   
 }
 function initOBstaculos(){
@@ -358,9 +347,7 @@ if(y>= 4520 && check6 == false){
    check6 = true;
 }
 if(y>= 4860 && check7 == false){ //Si has llegado al final te guarda tu tiempo y llama a isOver después de 15 segundos (se supone , no funciona demasiado bien)
-   player.body.mass = 0;
-   timer = this.game.time.totalElapsedSeconds();
-   setTimeout( isOver(), 5000);
+   updateGravity(); 
    check7 = true;
 }
 }
@@ -394,7 +381,7 @@ function checkColision(){ //Comprueba si te la has pegado , si no te la has pega
    
 }
 function checkDaño(){ //Mira cuanto daño te has hecho , si tienes 4 golpes mueres 
-if (wallHits ==4){
+if (wallHits == maxHits){
     muertepor = "golpes";
     muerto = true; 
    
@@ -416,25 +403,38 @@ function updateCounter(){ //Función que se llama cada vez que displayTimer lleg
 JesusTakeTheWheel.levelState.prototype = {
   
     preload: function() {
-       
+      
    },
     create: function() {  
+        charSelect = perSelect;
+         maxHits = hitsAvailable;
+         velpunta = speedAvailable;
+        console.log(charSelect);
+        console.log(maxHits);
+        console.log(velpunta);
         initPhysics();
        initInput();
        initPlayer();
+
        //initObstaculos();
        game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON); //Indicamos a la camara que siga a player 
 
        //Creamos el timer 
        timeDisplay = game.time.create(false);
-       timeDisplay.loop(1000, updateCounter, this); //Indicamos cada cuanto hace un loop y a que funcion tiene que llamar cuando lo haga 
-       timeDisplay.start();//Inicializamos el timer 
+       timeDisplay.loop(1000, updateCounter, this);//Indicamos cada cuanto hace un loop y a que funcion tiene que llamar cuando lo haga 
+       
+       timeDisplay.start();
+       //Inicializamos el timer 
     
      
    },
     update: function() { 
        
       game.debug.spriteInfo(player,32,32);
+       console.log(timeDisplay.seconds);
+      if(timeDisplay.seconds > 11){
+        player.body.moves = true;
+      }
        
        movePlayerDown(); // llama a los controles
        checkVel(); //Comprueba la velocidad 

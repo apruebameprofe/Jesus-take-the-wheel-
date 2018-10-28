@@ -30,6 +30,8 @@ JesusTakeTheWheel.preloadState.prototype = {
         game.load.tilemap('mapatest','../assets/Pista 1/Mapa1_Bumper.csv');
         game.load.tilemap('mapabombas','../assets/Pista 1/Mapa1_Bombas.csv');
         game.load.image('tiletest','../assets/images/firstprops.png');
+        game.load.image('startbuttonsprite','../assets/images/start.png');
+        game.load.image('flecha','../assets/images/flecha.png');
         
        
        

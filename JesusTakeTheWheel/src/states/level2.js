@@ -1,11 +1,11 @@
-JesusTakeTheWheel.endingState = function(game) {
+JesusTakeTheWheel.level2State = function(game) {
 
 }
 
 
 
     
-JesusTakeTheWheel.endingState.prototype = {
+JesusTakeTheWheel.level2State.prototype = {
 
     init: function() {
         

@@ -26,16 +26,10 @@ JesusTakeTheWheel.menuState.prototype = {
 
     update: function() {
     if(clicked){
-        var text = "loading" ;
-        var style = {
-            font: "65px Arial",
-            fill: "#ff0044",
-            align: "center"
-        };
-        var t = game.add.text(game.world.centerX - 300, 0, text, style);
+        
         clicked = false; 
         
-    game.state.start('levelState');
+    game.state.start('selectState');
     }
     }
 
