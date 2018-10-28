@@ -96,14 +96,14 @@ El juego estará hecho de manera que añadir vehículos y pistas nuevas sea una 
 
 **Durante la partida:** 
 
-* Flechas de dirección (provisional) para realizar las siguientes acciones:
+* Flechas de dirección: para realizar las siguientes acciones:
 	* Moverse de izquierda a derecha.
 	* Acelerar.
 	* Frenar.
 
 **Fuera de la partida:**
 
-* Cursor (provisional) para realizar las siguientes acciones:
+* Cursor: para realizar las siguientes acciones:
 	*Seleccionar las distintas opciones de los distintos menús
 
 
@@ -124,7 +124,7 @@ Se añadirán modos de partida adicionales y se describirán todos a continuaci�
 
 **Mecánicas:**
 
-* Desplazamiento: La mecánica principal del juego es el desplazamiento , cada vehículo podrá desplazarse solo en una franja visible de la pista junto a los demás participantes y no podrá salirse de esta en ningún momento salvo en el caso de que se salga por alguno de los laterales del circuito , caiga al vacio o pierda todos sus puntos de vida. Dentro de esta franja podrá disminuir o aumentar brevemente su velocidad para adelantar a los adversarios y girar hacia la derecha o la izquierda con el objetivo de esquivar obstáculos o embestir otros coches.
+* Desplazamiento: La mecánica principal del juego es el desplazamiento . Mientras se desplaza podrá disminuir o aumentar brevemente su velocidad para adelantar a los adversarios y girar hacia la derecha o la izquierda con el objetivo de esquivar obstáculos o embestir otros coches.
 
 * Puntuación: La puntuación determina el ganador de la carrera y dependerá tanto de la posición en la que cada corredor cruce la meta y del estado de su vehículo (o sus puntos de vida) al llegar a esta. Tendrá más peso la posición que el estado del vehículo para ceñirnos un poco más al género del juego.
 
@@ -141,20 +141,20 @@ Se añadirán modos de partida adicionales y se describirán todos a continuaci�
 
 
 **Personajes(vehículos)**
-Los personajes en este juego son los distintos vehículos disponibles. Cada vehículo dispondrá de una pequeña descripción sobre su origen y unas estadísticas propias en la siguiente versión de este documento.
+Los personajes en este juego son los distintos vehículos disponibles. Cada vehículo dispondrá de una pequeña descripción sobre su origen y unas estadísticas propias.
 Todos los personajes estarán disponibles desde la primera partida del jugador.
 * Características:
-	*Cuerpo : Determina la gran mayoría de la apariencia del vehículo e influye en 	algunas estadísticas.
-	*Chásis : Influye en las estadísticas y en elementos estéticos menores.
-	*Ruedas : Influyen en algunas estadísticas y en elementos estéticos menores.
+	*Resistencia : Determina los golpes que puede recibir el vehículo antes de romperse.
+	*Peso : Determina la velocidad máxima que puede alcanzar el jugador.
+	
 
 **Objetos**
 *Aclaración:*
 Los objetos aquí descritos son provisionales , en un futuro podrán añadirse más o cambiar las características de estos.
 * Power-Ups : Objetos que se podrán encontrar en zonas aleatorias del circuito que permitirán al jugador que los obtenga diferentes beneficios.
-	* Power-Up de aceleración: Permite avanzar más rápido durante unos segundos.
-	* Power-Up de escudo: Permite protegerse de un solo impacto contra un obstáculo 	o un jugador sin perder puntos de vida.
-	* Power-Up de regeneración: Permite recuperar uno o varios puntos de vida.
+	* Power-Up de aceleración: En la forma de un acelerador en el circuito , permite alcanzar la velocidad maxima del jugador .
+	* Power-Up de escudo: Permite protegerse de un solo impacto contra un jugador sin perder puntos de vida.
+	* Power-Up de regeneración: Permite recuperar un punto de vida.
 
 **Obstáculos**
 
@@ -162,7 +162,7 @@ Los objetos aquí descritos son provisionales , en un futuro podrán añadirse m
 Los obstáculos aquí descritos son provisionales , en un futuro podrán añadirse más o cambiar las características de estos.
 
 * Obstáculos estáticos: Obstáculos que no cambiarán su posición  nunca y formarán parte de un circuito o pista en particular.
-	* De un solo bloque o tile: Como pueden ser cajas , pacas de heno , barriles , etc.
+	* De un solo bloque o tile: Como pueden ser cajas , pacas de heno , barriles , vallas ,etc.
 	* De varios bloques o tiles: Como pueden ser paredes o rampas .
 
 * Obstáculos en movimiento: Obstáculos que formarán parte de un circuito o pista en particular pero podrán aparecer en un conjunto de zonas aleatoriamente y se desplazarán en el tiempo real de la carrera , por ejemplo : ruedas y otros objetos rodando por la carretera , personas distraidas , animales , etc.
@@ -232,4 +232,9 @@ El estilo visual de JTTW seguirá las bases del Pixel Art para buscar la sencill
 
 
 
+## 5.Capturas pre-Release:
+
+![MenuPrincipal](https://user-images.githubusercontent.com/38362985/47623066-ef8ebe00-db0c-11e8-84c3-589c01d35184.png)
+![SelecciónPistayPersonaje](https://user-images.githubusercontent.com/38362985/47623090-22d14d00-db0d-11e8-861a-16c260838301.png)
+![CapturadeJuego](https://user-images.githubusercontent.com/38362985/47623107-48f6ed00-db0d-11e8-8760-7fc772aaee82.png)
 
