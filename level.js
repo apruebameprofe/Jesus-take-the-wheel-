@@ -1,4 +1,4 @@
-CatCatcher.levelState = function(game) {
+JesusTakeTheWheel.levelState = function(game) {
 }
 //Variables globales
 var BOMBAS; //Colisión de grupo para los objetos del nivel 
@@ -43,13 +43,12 @@ var charArray = [
     [16,17,18,19,20,21,22,23,24,25,26,27,28],
     [32,33,34,35,36,37,38,39,40,41,42,43,44],
 ];
-var hitsAvailable = 4;
+
 var histAvailable2 = 4;
-var speedAvailable = 900; 
+
 var speedAvailable2 = 900;
-var perSelect = 3; 
+
 var perSelect2 = 2;
-var pistaSelect = 1;
 
 var tacked = false;
 
@@ -103,11 +102,12 @@ var timeSpin;
 
 var player2;
 
+//La funcion que solo cambia de estado , lo separo de cualquier otra función porque cambiar de estado ganando no es lo mismo que perdiendo
 function change(){
-    game.state.start('resultsState');
+    game.state.start('endingState');
 }
 
-function isOver(){ //Termina el juego y pasa al siguiente estado 
+function isOver(){ //Termina el juego cuando mueres , mueren los dos jugadores en esta version , genera una animación de muerte por tweens
     var subchar = charArray[charSelect];
     recorrido = player.body.position.y; 
     timer = this.game.time.totalElapsedSeconds()-3;
@@ -165,10 +165,10 @@ function isOver(){ //Termina el juego y pasa al siguiente estado
 
      
 
-
+change();
     
-}
-function updateGravity(eny,enx, player){
+}//Actualiza la gravedad según el jugador pero no funciona bien 
+function updateGravity(eny,enx){
    
     //Hace lo mismo que en initPhysics , podria llamarlo desde alli y ahorrarme el codigo
     
@@ -176,7 +176,16 @@ function updateGravity(eny,enx, player){
   this.player.body.gravity.x = enx;
    
 }
+function updateGravity2(eny,enx){
+   
+    //Hace lo mismo que en initPhysics , podria llamarlo desde alli y ahorrarme el codigo
+    
+  this.player2.body.gravity.y =eny;
+  this.player2.body.gravity.x = enx;
+   
+}
 
+//Estas 4 funciones son para el control de las animaciones que realiza el juador cuando choca con un objeto
 function stopforme(){
     player.animations.play('recto');
 }
@@ -194,7 +203,7 @@ function spinforme2(){
 
 }
 
-
+//Funciones de hits contra cosas 
 function hitCharco(){
     console.log("charco");
     var velrand = game.rnd.integerInRange(-15,15);  
@@ -380,6 +389,7 @@ function hitMeta(){
 
 //Los controles que me han costado la vida 
 //Controlan la posición del jugador y su rotación en caso de que se mueva a derecha o a izquierda 
+//Llaman a update gravedad 
  function movePlayerDown(){
    
    
@@ -459,7 +469,7 @@ function hitMeta(){
   
  }
 
-
+//Controles del jugador 2 , van con wasd 
  function movePlayer2Down(){
    
    
@@ -539,6 +549,8 @@ function hitMeta(){
    
   }
 
+
+  //checkSpeed se llama cuando el jugador está en una tile de salto , si su velocidad es demasiado baja lo tira 
  function checkSpeed(player){
      if(this.player === player){
      if(player.body.velocity.y < velpunta-50 ){
@@ -552,6 +564,7 @@ function hitMeta(){
     }
  
     }
+//Se llama cuando el jugador toca una tile de barranco  y lo mata 
  function caida(player){
      console.log("Vas lento");
      muerto = true; 
@@ -569,7 +582,7 @@ function hitMeta(){
     isOver();
  }
 
-//Inicia la gravedad y pone el mapa de colisiones con la pista 
+//Inicia la gravedad
 function initPhysics () {
 
    //Gravedad
@@ -582,6 +595,8 @@ function initPhysics () {
    player2.body.gravity.x = 0; 
 
 }
+
+//Pone el mapa de colisiones con la pista 
 function initStage(){
    
    
@@ -634,7 +649,7 @@ if (pistaSelect == 2){
      layer = cliffmap.createLayer(0);
  
    
-    map = game.add.tilemap('mapatest',45,45); //Añade a map (declarado en global) un tilemap que ya hemos cargado
+    map = game.add.tilemap('mapatest2',45,45); //Añade a map (declarado en global) un tilemap que ya hemos cargado
     map.addTilesetImage('tiletest'); //Añade el tileset 
     layer = map.createLayer(0); //Mete en layer una capa creada en el mapa (capa 0)
     map.setCollision([58,63,66,69,75,78,83,84,86,87,88,89,91,92,93,94,99,100,102,105,108,109,115,116,118,121,124,125,142,143],true); //Pone la colisión entre 3 y 3 , es decir , en el tile numero 3 del tileset que son
@@ -690,6 +705,7 @@ if (pistaSelect == 2){
    
  }
 }
+//Mete los obstáculos y les da propiedades físicas 
 function initThings(){
    META = game.add.physicsGroup();
    metamap.createFromTiles(19,-1,'metita',layer2,META);
@@ -776,7 +792,7 @@ function initPlayer(){
    player.anchor.set(0.5);//Pone el punto de referencia del sprite en el centro 
    game.physics.arcade.enable(player); //Activa las fisicas para el jugador
    player.body.bounce.set(0.001); //Le da bounce al cuerpo , no se si se va a quedar asi 
-   player.body.tilePadding.set(32); //Ni zorra de que es esto 
+   player.body.tilePadding.set(32); 
    player.body.drag = (25); //Añade rozamiento al cuerpo 
    player.body.allowRotation = true; //Permite la rotación de body 
    firstangle = player.body.angle; //Toma el primer ángulo con el que aparece el jugador y lo guarda para futura referencia
@@ -793,7 +809,7 @@ function initPlayer(){
    player2.anchor.set(0.5);//Pone el punto de referencia del sprite en el centro 
    game.physics.arcade.enable(player2); //Activa las fisicas para el jugador
    player2.body.bounce.set(0.001); //Le da bounce al cuerpo , no se si se va a quedar asi 
-   player2.body.tilePadding.set(32); //Ni zorra de que es esto 
+   player2.body.tilePadding.set(32); 
    player2.body.drag = (25); //Añade rozamiento al cuerpo 
    player2.body.allowRotation = true; //Permite la rotación de body 
    firstangle2 = player2.body.angle; //Toma el primer ángulo con el que aparece el jugador y lo guarda para futura referencia
@@ -805,17 +821,13 @@ function initPlayer(){
    player2.body.moves = true;
   
 }
-function initOBstaculos(){
-
-}
-
-//Actualizacion de hacia donde va la gravedad 
 
 
-//Checkeamos en que altura va el coche 
 
 
-function checkVel(){//Comprueba la velocidad del coche para que no sobrepase su máxima ni se frene del todo 
+
+//Comprueba la velocidad del coche para que no sobrepase su máxima ni se frene del todo 
+function checkVel(){
 
    if(player.body.velocity.y >= velpunta){
        player.body.velocity.y = (Math.min(velpunta, player.body.velocity.y));
@@ -835,8 +847,8 @@ function checkVel(){//Comprueba la velocidad del coche para que no sobrepase su 
         }
 
     
-
-function hitWall(){//Se activa cuando te la pegas contra la pared para añadirte un golpe y te pone next a true para indicar que te has colisionado recientmente 
+//Se activa cuando te la pegas contra la pared para añadirte un golpe y te pone next a true para indicar que te has colisionado recientmente 
+function hitWall(){
    
     if( player.body.velocity.y >= 200 && !next){
    console.log("hitwall");
@@ -853,6 +865,7 @@ function hitWall2(){
    }
 }
 
+//Se le llama cuando los jugadores colisonen entre ellos 
 function hitTackle(){
 if( !tackled){
     console.log("hitTackle");
@@ -862,8 +875,9 @@ tackled = true;
 }
 }
    
-
-function checkColision(){ //Comprueba si te la has pegado , si no te la has pegado te pone next a false para que te la puedas pegar 
+//Comprueba si te la has pegado , si no te la has pegado te pone next a false para que te la puedas pegar 
+//Llama a hitwall y a hitTackle 
+function checkColision(){ 
    
     
    if(!(game.physics.arcade.collide(player,layer,hitWall,null,this))){
@@ -894,7 +908,8 @@ function checkColision(){ //Comprueba si te la has pegado , si no te la has pega
     
    
 }
-function checkDaño(player){ //Mira cuanto daño te has hecho , si tienes 4 golpes mueres 
+//Mira cuanto daño te has hecho , si tienes  el maximo de golpes mueres 
+function checkDaño(player){ 
 
 if (wallHits == maxHits){
     muertepor = "golpes";
@@ -914,7 +929,7 @@ if (wallHits2 == maxHits2){
 }
 
 
-
+//Esto es del timer 
 function updateCounter(){ //Función que se llama cada vez que displayTimer llega a 1000 milisegundos 
     total++;
     if(total % 1000 == 0  ){ //Si el total de segundos no tiene resto al dividirlo entre 1000 es un minuto y lo añade 
@@ -925,7 +940,7 @@ function updateCounter(){ //Función que se llama cada vez que displayTimer lleg
 
 
 
-CatCatcher.levelState.prototype = {
+JesusTakeTheWheel.levelState.prototype = {
   
     preload: function() {
       
@@ -947,9 +962,7 @@ CatCatcher.levelState.prototype = {
         initThings();
        initInput();
        
-      
-
-       //initObstaculos();
+    
        game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON); //Indicamos a la camara que siga a player 
 
        //Creamos el timer 
@@ -987,6 +1000,7 @@ CatCatcher.levelState.prototype = {
        game.debug.text("Hits : " + wallHits, 32,64);
        game.debug.text("Hits 2 :" + wallHits, 32,86);
        
+       //TODAS LAS COLISIONES , ABSOLUTAMENTE TODAS 
        game.physics.arcade.overlap(player,CAIDAS,checkSpeed,null,this);
        game.physics.arcade.overlap(player,ABISMOS,caida,null,this);
        game.physics.arcade.overlap(player,BOMBAS,hitBomba,null,this);
