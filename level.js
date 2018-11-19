@@ -15,6 +15,8 @@ var META;
 var cursors2; 
 var totheend;
 
+var raceStart = false ; 
+
 var cursors;//Variable para los cursores de cntrol
 var map;//Variable para el mapa de colisiones
 var layer;//Variable para la capa del mapa de colisiones del mapa (el implementado arriba)
@@ -102,6 +104,13 @@ var timeSpin;
 
 var player2;
 
+var the3;
+var the2;
+var the1;
+var go;
+
+
+
 //La funcion que solo cambia de estado , lo separo de cualquier otra función porque cambiar de estado ganando no es lo mismo que perdiendo
 function change(){
     game.state.start('endingState');
@@ -111,44 +120,65 @@ function isOver(){ //Termina el juego cuando mueres , mueren los dos jugadores e
     var subchar = charArray[charSelect];
     recorrido = player.body.position.y; 
     timer = this.game.time.totalElapsedSeconds()-3;
-    var deadcar = game.add.sprite(player.body.x , player.body.y , 'racersprite',subchar[10]);
-    var deadhead = game.add.sprite(player.body.x, player.body.y , 'racersprite', subchar[9]);
-    var deadwheel = game.add.sprite(player.body.x,player.body.y, 'racersprite',subchar[11]);
-    var deadbody = game.add.sprite(player.body.x,player.body.y, 'racersprite',subchar[12]);
+    var corpse;
+    corpse = game.add.sprite(player.body.y, player.body.x,'caidita');
+    game.physics.arcade.enable(corpse);
+    corpse.body.x = player.body.x;
+    corpse.body.y = player.body.y; 
+    corpse.body.moves = false;
+    corpse.body.immovable = true; 
+    player.kill();
+
+
+    var corpse2 = game.add.sprite(player2.body.y, player2.body.x,'caidita');
+    game.physics.arcade.enable(corpse2);
+    corpse2.body.moves = false;
+    corpse2.body.immovable = true; 
+    player2.kill();
+    
+    var deadcar = game.add.sprite(corpse.body.x , corpse.body.y , 'racersprite',subchar[10]);
+    var deadhead = game.add.sprite(corpse.body.x, corpse.body.y , 'racersprite', subchar[9]);
+    var deadwheel = game.add.sprite(corpse.body.x,corpse.body.y, 'racersprite',subchar[11]);
+    var deadbody = game.add.sprite(corpse.body.x,corpse.body.y, 'racersprite',subchar[12]);
 
   
-    var tweencar = game.add.tween(deadcar).to({x:-100,y:-100},4000,"Quart.easeOut");
-    var tweenhead =  game.add.tween(deadhead).to({x:1100,y:-100},4000,"Quart.easeOut");
-    var tweenwheel =  game.add.tween(deadwheel).to({x:-100,y:900},4000,"Quart.easeOut");
-    var tweenbody =  game.add.tween(deadbody).to({x:1100,y:900},4000,"Quart.easeOut");
+    var tweencar = game.add.tween(deadcar).to({x:0,y:0},4000,"Quart.easeOut");
+    var tweenhead =  game.add.tween(deadhead).to({x:2700,y:21600},4000,"Quart.easeOut");
+    var tweenwheel =  game.add.tween(deadwheel).to({x:2700,y:0},4000,"Quart.easeOut");
+    var tweenbody =  game.add.tween(deadbody).to({x:0,y:21600},4000,"Quart.easeOut");
 
+    var playertest; 
 
     tweencar.start();
     tweenhead.start();
     tweenwheel.start();
     tweenbody.start();
 
-    var gameover = game.add.sprite(player.body.x , player.body.y, 'gameover');
+    
+    var gameover = game.add.sprite(corpse.body.x , corpse.body.y, 'gameover');
     gameover.anchor.setTo(0.5);
-    //var tweengameover = game.add.tween(gameover).to({x:player.body.y},4000,"Quart.easeOut");
-    //tweengameover.onComplete.add(change,this);
-    //tweengameover.start();
-     player.kill();
+    var tweengameover = game.add.tween(gameover).to({x:corpse.body.y},4000,"Quart.easeOut");
+    tweengameover.onComplete.add(change,this);
+    tweengameover.start();
+    
 
 
      var subchar2 = charArray[charSelect2];
     recorrido2 = player.body.position.y; 
     timer = this.game.time.totalElapsedSeconds()-3;
-    var deadcar2 = game.add.sprite(player2.body.x , player2.body.y , 'racersprite',subchar2[10]);
-    var deadhead2 = game.add.sprite(player2.body.x, player2.body.y , 'racersprite', subchar2[9]);
-    var deadwheel2 = game.add.sprite(player2.body.x,player2.body.y, 'racersprite',subchar2[11]);
-    var deadbody2 = game.add.sprite(player2.body.x,player2.body.y, 'racersprite',subchar2[12]);
+
+    
+
+    var deadcar2 = game.add.sprite(corpse2.body.x , corpse.body.y , 'racersprite',subchar2[10]);
+    var deadhead2 = game.add.sprite(corpse2.body.x, corpse2.body.y , 'racersprite', subchar2[9]);
+    var deadwheel2 = game.add.sprite(corpse2.body.x,corpse2.body.y, 'racersprite',subchar2[11]);
+    var deadbody2 = game.add.sprite(corpse2.body.x,corpse2.body.y, 'racersprite',subchar2[12]);
 
   
-    var tweencar2 = game.add.tween(deadcar2).to({x:-100,y:-100},4000,"Quart.easeOut");
-    var tweenhead2 =  game.add.tween(deadhead2).to({x:1100,y:-100},4000,"Quart.easeOut");
-    var tweenwheel2 =  game.add.tween(deadwheel2).to({x:-100,y:900},4000,"Quart.easeOut");
-    var tweenbody2 =  game.add.tween(deadbody2).to({x:1100,y:900},4000,"Quart.easeOut");
+    var tweencar2 = game.add.tween(deadcar2).to({x:2700,y:0},4000,"Quart.easeOut");
+    var tweenhead2 =  game.add.tween(deadhead2).to({x:0,y:21600},4000,"Quart.easeOut");
+    var tweenwheel2 =  game.add.tween(deadwheel2).to({x:0,y:0},4000,"Quart.easeOut");
+    var tweenbody2 =  game.add.tween(deadbody2).to({x:2700,y:21600},4000,"Quart.easeOut");
 
 
     tweencar2.start();
@@ -156,16 +186,16 @@ function isOver(){ //Termina el juego cuando mueres , mueren los dos jugadores e
     tweenwheel2.start();
     tweenbody2.start();
 
-    var gameover2 = game.add.sprite(player2.body.x , player2.body.y, 'gameover');
+    var gameover2 = game.add.sprite(corpse2.body.x , corpse2.body.y, 'gameover');
     gameover2.anchor.setTo(0.5);
-    //var tweengameover = game.add.tween(gameover).to({x:player.body.y},4000,"Quart.easeOut");
-    //tweengameover.onComplete.add(change,this);
-    //tweengameover.start();
-     player2.kill();
+    var tweengameover2 = game.add.tween(gameover2).to({x:corpse2.body.y},4000,"Quart.easeOut");
+   
+    tweengameover2.start();
+     
 
      
 
-change();
+
     
 }//Actualiza la gravedad según el jugador pero no funciona bien 
 function updateGravity(eny,enx){
@@ -383,7 +413,25 @@ function hitMeta(){
     recorrido = player.body.position.y;
     timer = this.game.time.totalElapsedSeconds()-3;
 
-    change();
+    var posfinx = player.body.position.x;
+    var posfiny = player.body.position.y;
+
+    var posfinx2 = player2.body.position.x;
+    var posfiny2 = player2.body.position.y;
+
+    player.body.moves = false;
+    player2.body.moves = false;
+   
+    var tweenMeta1 = game.add.tween(player).to({x: posfinx ,y:posfiny +300},4000,"Quart.easeOut");
+    var tweenMeta2 = game.add.tween(player2).to({x: posfinx2 ,y:posfiny2 +300},1000,"Quart.easeOut");
+
+    tweenMeta1.onComplete.add(change);
+
+    tweenMeta2.start();
+    tweenMeta1.start(); 
+
+
+   
 }
 
 
@@ -604,6 +652,7 @@ if (pistaSelect == 1){
    game.world.setBounds(0,0,10000,360000); //Pone bordes al mundo para que sea mas grande que la ventana de vista 
 
    
+   
    caidamap = game.add.tilemap('caidas',45,45);
    caidamap.addTilesetImage('tiletest');
    layer3 = caidamap.createLayer(0);
@@ -801,8 +850,10 @@ function initPlayer(){
    player.animations.add('izquierda',[subchar[2],subchar[3]],10,true);
    player.animations.add('dizzy',[subchar[1],subchar[2],subchar[6],subchar[8],subchar[4]],10,true);
    player.animations.play('recto');
-   player.body.moves = true;
+   player.body.moves = false;
+   player.body.immovable = true;
    
+   playertest = game.add.sprite(0,0,'caidita'); 
 
    var subchar2 = charArray[charSelect2];
    player2 = game.add.sprite(450, 20, 'racersprite',subchar2[0]); //Le da un sprite en la posición 600,20 , con el tile 0 del tileset arrowsprite 
@@ -818,7 +869,8 @@ function initPlayer(){
    player2.animations.add('izquierda',[subchar2[2],subchar2[3]],10,true);
    player2.animations.add('dizzy',[subchar2[1],subchar2[2],subchar2[6],subchar2[8],subchar2[4]],10,true);
    player2.animations.play('recto');
-   player2.body.moves = true;
+   player2.body.moves = false;
+   player2.body.immovable = true;
   
 }
 
@@ -936,6 +988,31 @@ function updateCounter(){ //Función que se llama cada vez que displayTimer lleg
         minutos++;
     }
 }
+function allowMovement(){
+    console.log("moving! ");
+    player.body.moves = true;
+    player.body.immovable = false;
+
+    player2.body.moves = true;
+    player2.body.immovable = false;
+
+    timeDisplay.start();
+}
+function tweenAndStart(){
+    console.log("TweenAndSTart");
+    raceStart = true; 
+   var the3tween = game.add.tween(the3).to({x:player.body.x ,y:player.body.y},1000,"Quart.easeOut");
+   var the2tween = game.add.tween(the2).to({x:player.body.x,y:player.body.x},1000,"Quart.easeOut");
+   var the1tween = game.add.tween(the1).to({x:player.body.x,y:player.body.y},1000,"Quart.easeOut");
+
+ 
+   the3tween.onComplete.add(function() {the3.kill(); the2tween.start();});
+   the2tween.onComplete.add(function() {the2.kill(); the1tween.start();});
+   the1tween.onComplete.add(function() {the1.kill();go.alpha = 1; ; allowMovement(); });
+    
+   the3tween.start();
+
+}
 
 
 
@@ -946,6 +1023,8 @@ JesusTakeTheWheel.levelState.prototype = {
       
    },
     create: function() {  
+
+       
        
         charSelect = perSelect;
          maxHits = hitsAvailable;
@@ -953,6 +1032,8 @@ JesusTakeTheWheel.levelState.prototype = {
          charSelect2 = perSelect2;
         maxHits2 = histAvailable2;
         velpunta2 = speedAvailable2; 
+
+        game.stage.backgroundColor = "#dbfff7";
     
         initStage();
     
@@ -962,14 +1043,19 @@ JesusTakeTheWheel.levelState.prototype = {
         initThings();
        initInput();
        
-    
+       the3 = game.add.sprite(-45 , player.body.y,'numeros',2);
+       the2 = game.add.sprite(-45 , player.body.y,'numeros',1);
+       the1 = game.add.sprite(-45 , player.body.y,'numeros',0);
+       go = game.add.sprite(player.body.x, player.body.y,'numeros',9);
+       go.alpha = 0;  
+
        game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON); //Indicamos a la camara que siga a player 
 
        //Creamos el timer 
        timeDisplay = game.time.create(false);
        timeDisplay.loop(1000, updateCounter, this);//Indicamos cada cuanto hace un loop y a que funcion tiene que llamar cuando lo haga 
        
-       timeDisplay.start();
+       
        //Inicializamos el timer 
 
 
@@ -981,6 +1067,7 @@ JesusTakeTheWheel.levelState.prototype = {
    },
     update: function() { 
         
+        if(!raceStart){tweenAndStart()}
      
        
        movePlayerDown(); // llama a los controles
