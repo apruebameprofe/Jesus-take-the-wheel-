@@ -1102,8 +1102,6 @@ Jesus.levelState.prototype = {
 	  if(yesimready == 1 && yes2isready == 1){
 		  raceStart = true; 
 	  }
-	  game.debug.spriteInfo(player, 32, 32);
-	  game.debug.spriteInfo(player2, 32, 130);
 
     if (raceStart) {
       tweenAndStart();

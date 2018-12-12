@@ -21,7 +21,7 @@ var cursors2;
 var totheend;
 var alreadydead2 = false; 
 var animstate = 1;
-var desesperacion; 
+var desesperacion = 2; 
 var animstate2 = 1; 
 var raceStart = false;
 var thekey;
@@ -809,11 +809,11 @@ function initInput() {
 //Inicia toodo lo que tenga que ver con el jugador y tiene en cuenta su id
 function initPlayer() {
   var subchar = charArray[charSelect];
-  if (game.player1.id == 1) {
+
     player = game.add.sprite(570, 100, "racersprite", subchar[0]);
-  } else {
-    player = game.add.sprite(400, 100, "racersprite", subchar[0]);
-  }
+
+  
+  
 
   player.anchor.set(0.5);
   game.physics.arcade.enable(player);
@@ -840,12 +840,10 @@ function initPlayer() {
 function initPlayer2() {
 
   subchar2 = charArray[desesperacion];
-  console.log("Pero por que me haces esto phaser" + desesperacion);
-  if (game.player2.id == 1) {
-    player2 = game.add.sprite(570, 100, "racersprite", subchar2[0]);
-  } else {
+
+ 
     player2 = game.add.sprite(400, 100, "racersprite", subchar2[0]);
-  }
+  
  
   player2.anchor.set(0.5);
   firstangle2 = player2.angle;
@@ -967,20 +965,17 @@ Jesus.levelState.prototype = {
     initStage();
     initPlayer();
     
-    this.putRacer(); 
-    
+       
 
 
     var auxid;
 
-    pistaSelect = game.player1.ourrandom;
+    pistaSelect = 1
     console.log(pistaSelect);
     
     //initPlayer2(); 
    
-    auxid = game.player2.id;    
-    console.log("ME CAGO EN DIOS" + game.player1.id);
-    console.log("ME CAGO EN DIOS" + game.player2.id);
+   
 
   },
 
@@ -1042,6 +1037,15 @@ Jesus.levelState.prototype = {
     
   },
   update: function() {
+	  var myinfo = {
+		  
+		"type" :  "GET",
+		"subtype" : "GET_STATE",
+      	"ID": ownid
+		  
+		  
+	  }
+	  ws.send(JSON.stringify(myinfo));
 	  
 	  if(maxHits == 6){
 		  if(wallHits == 6){
@@ -1087,10 +1091,7 @@ Jesus.levelState.prototype = {
 		  }
 	    }
 	  
-	   this.getPlayer(function(getRacer) {
-		      game.player2 = JSON.parse(JSON.stringify(getRacer));
-		    });
-
+	 
 
 	   
 		   
@@ -1102,6 +1103,8 @@ Jesus.levelState.prototype = {
 	  if(yesimready == 1 && yes2isready == 1){
 		  raceStart = true; 
 	  }
+	  game.debug.spriteInfo(player, 32, 32);
+	  game.debug.spriteInfo(player2, 32, 130);
 
     if (raceStart) {
       tweenAndStart();
@@ -1153,7 +1156,7 @@ Jesus.levelState.prototype = {
 
     //Aqui es donde subimos la info del jugador local y recuperamos la del jugador online para actualizarla
 
-    this.putRacer();
+  
 
  
 
@@ -1165,54 +1168,28 @@ Jesus.levelState.prototype = {
     alreadydead2 = true; 
       killPlayer2();
     }
-  },
-
-  getPlayer(callback) {
-    $.ajax({
-      method: "GET",
-      url: "/game/" + game.player2.id,
-      processData: false,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).done(function(data) {
-      game.player2 = JSON.parse(JSON.stringify(data));
-      auxX = game.player2.posX;
-	    auxY = game.player2.posY;
-	    player2.position.x = game.player2.posX;
-	    player2.position.y = game.player2.posY;
-	    muerto2 = game.player2.dead;
-	    ganado2 = game.player2.winner;
-	    player2.angle = game.player2.angulo;
-	    animstate2 = game.player2.animation; 
-	    yes2isready = game.player2.letstart; 
-
-    });
-  },
-
-  putRacer() {
-	 console.log("He hecho el put");
-    game.player1.posX = player.position.x;
-    game.player1.posY = player.position.y;
-    game.player1.dead = muerto;
-    game.player1.winner = ganado;
-    game.player1.kart = charSelect;
-    game.player1.angulo = player.angle; 
-    game.player1.animation = animstate; 
-    game.player1.letstart = yesimready; 
     
-    $.ajax({
-      method: "PUT",
-      url: "/game/" + game.player1.id,
-      data: JSON.stringify(game.player1),
-      processData: false,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).done(function(data) {
-      console.log("Actualizada posicion de player local: " + JSON.stringify(data));
-     
+    var data = {
+    		
+        	"type" :  "UPDATE",
+        	"subtype" : "UPDATE_STATE",
+        	"ID": ownid,
+        	"posX" : player.position.x,
+        	"posY" : player.position.y,
+        	"dead" : muerto,
+        	"winner" : ganado,
+        	"angulo" : player.angle,
+        	"Kart" : charSelect,
+        	"Animation" : animstate,
+        	"ourrandom" : 999
+        		
+        }
+    
+    ws.send(JSON.stringify(data));
+    
+    
+    
+  },
 
-    });
-  }
-};
+
+}
