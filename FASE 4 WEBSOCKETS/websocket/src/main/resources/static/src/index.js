@@ -9,5 +9,7 @@ game.state.add('matchmakingState', Jesus.matchmakingState)
 game.state.add('staselState', Jesus.staselState)
 game.state.add('levelState', Jesus.levelState)
 game.state.add('endingState', Jesus.endingState)
-  
+
+game.state.add('monecoState', Jesus.monecoState)
+
 game.state.start('bootState')
