@@ -103,13 +103,13 @@ ws.onmessage = function (message) {
             console.log('MI ID ES: '+ ownid)
             console.log('LA ID QUE ENVIO ES:'+msg.ID)
              console.log('');
- 
+            console.log('POSICION MIA EN X E Y:'+ msg.posX + msg.posY);
           if(msg.ID != ownid){
             	 
     	  console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
-    	  console.log("La x? :" + msg.posX);
-    	  console.log("La y? :" + msg.posY);
-    	  console.log('kart:' + msg.Kart)
+    	  console.log("La x2? :" + msg.posX);
+    	  console.log("La y2? :" + msg.posY);
+    	  console.log('kart2:' + msg.Kart)
           player2kart = msg.Kart;
           player2posx = msg.posX;
           player2posy = msg.posY;

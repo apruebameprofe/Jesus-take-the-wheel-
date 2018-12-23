@@ -1182,14 +1182,22 @@ Jesus.levelState.prototype = {
       killPlayer2();
     }
    
+   //muestra la posicion es x e y
+   console.log("player position " + player.body.position);
+   console.log("");
+   console.log("EQUIS DE: "+ player.body.position.x);
+   console.log("IGRIEGA: " + player.body.position.y);
+   console.log("");
     var data = {
+    		
+    		
     		
     		
         	"type" :  "UPDATE",
         	"subtype" : "UPDATE_STATE",
         	"ID": ownid,
-        	"posX" : player.positionX,
-        	"posY" : player.positionY,
+        	"posX" : player.body.position.x,
+        	"posY" : player.body.position.y,
         	"dead" : muerto,
         	"winner" : ganado,
         	"Kart" : charSelect,
