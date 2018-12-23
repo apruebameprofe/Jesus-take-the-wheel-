@@ -1,4 +1,4 @@
-package es.AllStarDevs.NatillasConFuet;
+package es.AllStarDevs.NatillasSinFuet;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import es.AllStarDevs.NatillasConFuet.gameController;
+import es.AllStarDevs.NatillasSinFuet.gameController;
 
 
 public class WebsocketGameHandler extends TextWebSocketHandler {

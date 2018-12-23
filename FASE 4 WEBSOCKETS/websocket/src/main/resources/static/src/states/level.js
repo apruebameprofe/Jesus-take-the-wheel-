@@ -854,7 +854,7 @@ function initPlayer2() {
   player2.animations.play("recto2"); 
 
 }
-//Comprueba la velocidad del coche para que no sobrepase su máxima ni se frene del todo
+//Comprueba la velocad del coche para que no sobrepase su máxima ni se frene del todo
 function checkVel() {
   if (player.body.velocity.y >= velpunta) {
     player.body.velocity.y = Math.min(velpunta, player.body.velocity.y);
@@ -1037,16 +1037,7 @@ Jesus.levelState.prototype = {
     
   },
   update: function() {
-	  var myinfo = {
-		  
-		"type" :  "GET",
-		"subtype" : "GET_STATE",
-      	"ID": ownid
-		  
-		  
-	  }
-	  ws.send(JSON.stringify(myinfo));
-	  
+	 
 	  if(maxHits == 6){
 		  if(wallHits == 6){
 			  heart1.alpha = 1; 
@@ -1168,12 +1159,21 @@ Jesus.levelState.prototype = {
     alreadydead2 = true; 
       killPlayer2();
     }
-    
+    var auxid;
+    if (ownid ==1){
+    	auxid=2
+    	console.log('own id es 1')
+    }
+    if (ownid ==2){ 
+    	auxid=1
+    	console.log('own id es 2')
+    }
     var data = {
+    		
     		
         	"type" :  "UPDATE",
         	"subtype" : "UPDATE_STATE",
-        	"ID": ownid,
+        	"ID": auxid,
         	"posX" : player.position.x,
         	"posY" : player.position.y,
         	"dead" : muerto,

@@ -65,13 +65,7 @@ ws.onmessage = function (message) {
             console.log('winner: ' + msg.player.winner)
         
             ourrandomserv = msg.player.ourrandom;  	
-            ownid = msg.player.ID; 
-            
-            
-          
-            
-     
-            
+            ownid = msg.player.ID;
             
             break
             
@@ -82,7 +76,10 @@ ws.onmessage = function (message) {
             break
     }
     switch(msg.subtype){
-    
+  
+    //no entra en esta condición
+   
+          
         case "UPDATE_STATE":
             console.log('!!!!! GAME SENDS UPDATE !!!!!')
           
@@ -94,20 +91,27 @@ ws.onmessage = function (message) {
             console.log('ang: ' + msg.angulo)
             console.log('dead: ' + msg.dead)
             console.log('winner: ' + msg.winner)
+           
+            //prueba de si las variables tienen bien los valores
+            console.log('');
+            console.log('MI ID ES: '+ ownid)
+            console.log('LA ID QUE ENVIO ES:'+msg.ID)
+             console.log('');
+ 
+             if(msg.ID != ownid){
+            	 
+    	  console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
+          player2kart = msg.kart;
+          player2posx = msg.posX;
+          player2posy = msg.posY;
+          player2dead = msg.dead;
+          player2winner = msg.winner;
+          player2anim = msg.Animation;
+          player2angle = msg.angulo; 
+          
+         
             
-            
-            if(msg.ID != ownid){
-            	
-            	  console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
-                  
-                  player2kart = msg.kart;
-                  player2posx = msg.posX;
-                  player2posy = msg.posY;
-                  player2dead = msg.dead;
-                  player2winner = msg.winner;
-                  player2anim = msg.Animation;
-                  player2angle = msg.angulo; 
-            }
+            } //level js quitar get state
         
    
             
