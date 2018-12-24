@@ -2,7 +2,7 @@ debug = {
     ws: 1
 }
 
-var ws = new WebSocket('ws://127.0.0.1:8080/jesus');
+var ws = new WebSocket('ws://192.168.1.196:8080/jesus');
 
 
 var numplayers; 
