@@ -1,13 +1,18 @@
 Jesus.endingState = function(game) {
 
 }
+var clickedend; 
+var imgGana;
+var imgMuere;
 
+function listener2 (){
+    console.log("click!");
+    clickedend = true;
+}
+//funcion que dependiendo de si el jugador gana o muere hace que salga el mensaje de ganar o el de perder
 function ganaMuere(){
-	var clickedend; 
-	var imgGana;
-	var imgMuere;
 	if(muerto){
-		//Aparece un texto segun el jugador local haya perdido o no 
+		
 		console.log("has perdido");
 		imgMuere = game.add.sprite( game.world.centerX-350 , game.world.centerY-200, 'youdead');
 		
@@ -46,8 +51,9 @@ Jesus.endingState.prototype = {
     	var endingbackground = game.add.sprite(game.world.X,game.world.Y,'endback'); 
     	var replaybutton = game.add.sprite( game.world.centerX , game.world.centerY+250, 'replay');
     	replaybutton.anchor.setTo(0.5);
+    	
         replaybutton.inputEnabled = true;
-        replaybutton.events.onInputDown.add(listener, this);
+        replaybutton.events.onInputDown.add(listener2, this);
       
     },
 

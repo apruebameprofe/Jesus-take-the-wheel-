@@ -296,6 +296,7 @@ function hitBomba(player, bomba) {
     muerto = true;
     console.log("bomba");
     bomba.kill();
+    
 
     isOver();
   }

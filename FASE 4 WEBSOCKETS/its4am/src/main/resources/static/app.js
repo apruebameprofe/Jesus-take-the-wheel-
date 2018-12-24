@@ -2,15 +2,14 @@ debug = {
     ws: 1
 }
 
-var ws = new WebSocket('ws://127.0.0.1:8080/jesus')
+var ws = new WebSocket('ws://127.0.0.1:8080/jesus');
 
-/*var game.global = {
-}*/
 
 var numplayers; 
 var ownid; 
 var ourrandomserv;
 
+var player2rand;
 var player2kart; 
 var player2posx;
 var player2posy; 
@@ -107,14 +106,16 @@ ws.onmessage = function (message) {
           if(msg.ID != ownid){
             	 
     	  console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
-    	  console.log("La x2? :" + msg.posX);
-    	  console.log("La y2? :" + msg.posY);
-    	  console.log('kart2:' + msg.Kart)
+    	  console.log("La x2 :" + msg.posX);
+    	  console.log("La y2 :" + msg.posY);
+    	  console.log('kart2:' + msg.Kart);
+    	  console.log('dead:' + player2dead);
           player2kart = msg.Kart;
           player2posx = msg.posX;
           player2posy = msg.posY;
           player2dead = msg.dead;
           player2winner = msg.winner;
+          player2rand = msg.ourrandom;
           player2anim = msg.Animation;
           player2angle = msg.angulo; 
       	console.log("is it asigned ?? " + player2posx + " " + player2posy)
