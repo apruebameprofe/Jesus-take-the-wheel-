@@ -953,7 +953,12 @@ function tweenAndStart() {
 function settoTrue(){
 	yesimready = 1; 
 }
-
+//función que comprueba si se ha pulsado la tecla y hace que deje de verse el texto
+function pulsaUno(){
+	  if(yesimready==1){
+		  press1.visible=false;
+	  }
+}  
 Jesus.levelState.prototype = {
   init: function() {
 	 
@@ -981,6 +986,7 @@ Jesus.levelState.prototype = {
 	initPlayer2();  
 	thekey = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 	thekey.onDown.add(settoTrue, this);
+	
 	game.state.disableVisibilityChange = true;
     //Iniciamos fisicas , objetos y controles
 
@@ -1029,8 +1035,9 @@ Jesus.levelState.prototype = {
     
     }
     //añadimos la imagen que indica que pulsemos q para empezar
-    press1 = game.add.sprite(570, 100, 'press1start');
-    
+  press1 = game.add.sprite(750, 50, 'press1start');
+ 
+  
     
   },
   update: function() {
@@ -1123,7 +1130,8 @@ Jesus.levelState.prototype = {
     checkColision(); //Comprueba la colisión
 
     checkDaño(); //Comprueba el daño
-
+    
+    pulsaUno(); //comprueba si se ha pulsado 1
     //Muestra el timer con la funcionalidad de debug
     game.debug.text(":" + timeDisplay.duration.toFixed(0) / 10, 86, 32);
     game.debug.text(":" + total, 64, 32);
