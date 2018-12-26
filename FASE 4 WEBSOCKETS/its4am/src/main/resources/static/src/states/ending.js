@@ -27,18 +27,8 @@ function ganaMuere(){
 Jesus.endingState.prototype = {
 	init: function() {
 		console.log("estoy en endingState");
-		if (game.player != null) {
-				$.ajax({
-			            method: "DELETE",
-			            url: 'http://localhost:8080/game/' + game.player.id,
-			            processData: false,
-			            headers: {
-			                "Content-Type": "application/json"
-			            },
-			        }).done(function (data) {
-			            //console.log("Player removed: " + JSON.stringify(data));
-			        })
-				}
+		//hacer aqui que los valores vuelvan a ser los iniciales
+		
 			},			
     preload: function() {
     	

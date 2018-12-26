@@ -48,7 +48,7 @@ Jesus.matchmakingState.prototype = {
     	    ws.send(JSON.stringify(data));
     	 
     	 
-    	 game.time.events.add(Phaser.Timer.SECOND * 4, setstartgametrue, this);
+    	 game.time.events.add(Phaser.Timer.SECOND * 2, setstartgametrue, this);
        
     },
 

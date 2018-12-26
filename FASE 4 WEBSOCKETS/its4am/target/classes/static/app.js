@@ -2,23 +2,21 @@ debug = {
     ws: 1
 }
 
-var ws = new WebSocket('ws://192.168.1.39:8080/jesus');
-
-
+var ws = new WebSocket('ws://192.168.1.196:8080/jesus');
+var msg; 
 var numplayers; 
 var ownid; 
 var ourrandomserv;
 
  player2rand=0;
  player2kart=0; 
- player2posx=0;
- player2posy=0; 
+ player2posx=400;
+ player2posy=100; 
  player2dead=true;
  player2winner=false;
  player2anim=0;
  player2angle = 0;
  player2ready = 0; 
-
 
 var yesselectedKart = false; 
 
@@ -48,8 +46,8 @@ ws.onmessage = function (message) {
         console.log('[DEBUG-WS] Se ha recibido un mensaje de jugador : ' +  message.data)
     }
  
-
-    var msg = JSON.parse(message.data)
+   msg = JSON.parse(message.data);
+   
 
     console.log('INFO RECIBIDA ' + msg.type)
 
@@ -113,14 +111,16 @@ ws.onmessage = function (message) {
     	  console.log('kart2:' + msg.Kart);
     	  console.log('dead:' + player2dead);
           player2kart = msg.Kart;
+          
           player2posx = msg.posX;
           player2posy = msg.posY;
+          
           player2dead = msg.dead;
           player2winner = msg.winner;
           player2rand = msg.ourrandom;
           player2anim = msg.Animation;
           player2angle = msg.angulo; 
-      	console.log("is it asigned ?? " + player2posx + " " + player2posy)
+      	  console.log("is it asigned ?? " + player2posx + " " + player2posy)
           
           console.log("EL READY " + msg.ready);
           player2ready = msg.ready;

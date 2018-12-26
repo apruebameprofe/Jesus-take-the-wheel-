@@ -1,6 +1,7 @@
 Jesus.levelState = function(game) {
 	
 };
+var player2;
 var heart1;
 var heart2;
 var heart3;
@@ -93,7 +94,7 @@ var countdownEvent;
 
 var timeSpin;
 
-var player2;
+
 
 var the3;
 var the2;
@@ -1039,10 +1040,15 @@ Jesus.levelState.prototype = {
 	  
 	  /////////////////////cosas del player2/////////
 	  
-	 
+	  //actualiza la posición del jugador 2 con la información que le llega del servidor
+	  //usando una variable que en app guarda el valor actualizado del jugador
+	  player2.position.x=player2posx;
+	  player2.position.y=player2posy;
+	  console.log("msg.posX" + msg.posX);
+	  console.log("player2posx" + player2posx);
 	  animstate2 = player2anim; 
 	  yes2isready = player2ready; 
-	  updatePlayer2General();
+	 
 	  ////////////////////////////////////////////
 	  
 	  if(maxHits == 6){
@@ -1189,8 +1195,7 @@ Jesus.levelState.prototype = {
     
     ws.send(JSON.stringify(data));
     
-    player2.position.X = player2posx;
-    player2.position.Y = player2posy;
+    
     
   },
  
