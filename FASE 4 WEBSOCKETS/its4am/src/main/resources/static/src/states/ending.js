@@ -50,12 +50,39 @@ Jesus.endingState.prototype = {
     update: function() {
     	ganaMuere();
     	if(clickedend){
+    	  	 
+    		//ponemos los datos del primer jugador con sus valores iniciales si
+    		//queremos volver a jugar
+    		yesimready=0;
+    		alreadydead= false;
+    		ganado= false;
+    		wallHits = 0;
+    		animstate=1;
+    		yesselectedKart=false;
+    		//datos del jugador dos en valores inicicales 
+            player2dead = false;
+            player2winner = false;
+            player2anim = 1;
+            player2ready = 0;
+            yes2isready=0;
             
+            console.log("WALUIGI");
+            console.log("ready jug 1:" +yesimready);
+            console.log("yes2isready: " + yes2isready);
+            console.log("player2ready: "+ player2ready);
+            console.log("");
             clickedend = false; 
             //hacer que se cree un nuevo jugador al darle al botón, hacer llamada al server?
         game.state.start('menuState');
+       
+        	//player.body.position.x=500;
+    		//player.body.position.y=500;
+    		//charSelect= perselect;
+    		//player.angle=0;
+
+ 	
+ 	
         }
      
      }
-
-    }
+}

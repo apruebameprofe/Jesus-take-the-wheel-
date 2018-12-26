@@ -980,12 +980,15 @@ Jesus.levelState.prototype = {
   preload: function() {
 	  
 	  desesperacion = player2kart;
-	 
+	  press1 = game.add.sprite(750, 50, 'press1start');
+	  
   },
   create: function() {
 	initPlayer2();  
+	
 	thekey = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 	thekey.onDown.add(settoTrue, this);
+	
 	
 	game.state.disableVisibilityChange = true;
     //Iniciamos fisicas , objetos y controles
@@ -1035,7 +1038,7 @@ Jesus.levelState.prototype = {
     
     }
     //añadimos la imagen que indica que pulsemos q para empezar
-  press1 = game.add.sprite(750, 50, 'press1start');
+  
  
   
     
@@ -1182,6 +1185,8 @@ Jesus.levelState.prototype = {
    console.log("EQUIS DE: "+ player.body.position.x);
    console.log("IGRIEGA: " + player.body.position.y);
    console.log("");
+   console.log("a ver yesimready que haces: " + yesimready);
+   
  //Aqui es donde subimos la info del jugador local y recuperamos la del jugador online para actualizarla
     var data = {
     	
@@ -1198,7 +1203,8 @@ Jesus.levelState.prototype = {
         	"angulo" : player.angle,
         	"Animation" : animstate,
         	"Animation2" : animstate2,
-        	"ready" : yesimready
+        	"ready" : yesimready,
+        	"ready2" : yes2isready
         	
         	
         }

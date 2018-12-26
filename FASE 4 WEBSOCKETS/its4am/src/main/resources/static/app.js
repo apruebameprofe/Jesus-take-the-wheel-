@@ -96,36 +96,32 @@ ws.onmessage = function (message) {
             console.log('dead: ' + msg.dead)
             console.log('winner: ' + msg.winner)
             console.log('ready?:' +  msg.ready)
-           
+           console.log("a ver yesimready que haces: " + msg.ready);
             //prueba de si las variables tienen bien los valores
             console.log('');
             console.log('MI ID ES: '+ ownid)
             console.log('LA ID QUE ENVIO ES:'+msg.ID)
-             console.log('');
+            console.log('');
             console.log('POSICION MIA EN X E Y:'+ msg.posX + msg.posY);
+            
           if(msg.ID != ownid){
-            	 
-    	  console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
-    	  console.log("La x2 :" + msg.posX);
-    	  console.log("La y2 :" + msg.posY);
-    	  console.log('kart2:' + msg.Kart);
-    	  console.log('dead:' + player2dead);
-          player2kart = msg.Kart;
-          
-          player2posx = msg.posX;
-          player2posy = msg.posY;
-          
-          player2dead = msg.dead;
-          player2winner = msg.winner;
-          player2rand = msg.ourrandom;
-          
-          player2anim = msg.Animation;
-          
-          player2angle = msg.angulo; 
-      	  console.log("is it asigned ?? " + player2posx + " " + player2posy)
-          
-          console.log("EL READY " + msg.ready);
-          player2ready = msg.ready;
+        	  console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
+        	  console.log("La x2 :" + msg.posX);
+        	  console.log("La y2 :" + msg.posY);
+        	  console.log('kart2:' + msg.Kart);
+        	  console.log('dead:' + player2dead);
+        	  player2kart = msg.Kart;
+        	  player2posx = msg.posX;
+        	  player2posy = msg.posY;
+        	  player2dead = msg.dead;
+        	  player2winner = msg.winner;
+        	  player2rand = msg.ourrandom;
+        	  player2anim = msg.Animation;
+        	  player2angle = msg.angulo; 
+        	  console.log("is it asigned ?? " + player2posx + " " + player2posy)
+        	  console.log("EL READY " + msg.ready);
+        	  console.log("a ver yesimready2 que haces: " + msg.ready);
+        	  player2ready = msg.ready;
           
           if(msg.Kart == 1 || msg.Kart == 2 || msg.Kart ==3){
           	yesselectedKart = true; 
