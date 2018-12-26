@@ -16,6 +16,7 @@ var CHARCOS;
 var CAIDAS;
 var ABISMOS;
 var META;
+var press1;
 var cursors2;
 var totheend;
 var alreadydead2 = false; 
@@ -84,18 +85,12 @@ var next = false;
 var next2; //Variables de apoyo que sirve para que las colisiones no se vuelvan locas
 var nextAcelerador = false;
 var nextAcelerador2;
-
 var timeDisplay; //Variable donde esta el timer
 var total = 0; // Total en segundos del tiempo en milisegundos del timer
 var minutos = 0; //Total en minutos del tiempo en milisegundos del timer
-
 var countdown;
 var countdownEvent;
-
 var timeSpin;
-
-
-
 var the3;
 var the2;
 var the1;
@@ -303,20 +298,25 @@ function hitBomba(player, bomba) {
 //función para comprobar si dos jugadores colisionan
 //Reciben ambos colisiones , toman la posicion de variables que se actualizan en el update (auxX , auxY)
 function colisionJugadores(player1, player2) {
+	
   if (player.body.position.x <= auxX +30 && player.body.position.x >= auxX -30) { //Bounding box clasico 
 	 if(player.body.position.y >= auxY -30 && player.body.position.y <= auxY +30){ 
 		 if ( !colisionPer){
     colisionPer = true;
     wallHits++;
     console.log("COLISION BB");
+    console.log("auxX: " + auxX);
+    console.log("auxY: " + auxY);
 	 }}
   } else {
-    console.log("NO COLISION BB ");
+    console.log("NO CHOCAN ");
+    console.log("auxX: " + auxX);
+    console.log("auxY: " + auxY);
     colisionPer = false; 
   }
 	 
   checkDaño();
-}
+} 
 //Funciona parecido a hitbomba , solo que no mata al jugador y al matar a la vaya pone en su lugar un sprite sin colision
 //que representa una valla rota
 function hitVallaRecta(player, valla) {
@@ -885,6 +885,7 @@ function checkColision() {
 }
 //Mira cuanto daño te has hecho , si tienes  el maximo de golpes mueres
 function checkDaño(player) {
+
   if (wallHits == maxHits) {
     muertepor = "golpes";
     muerto = true;
@@ -981,16 +982,13 @@ Jesus.levelState.prototype = {
 	thekey = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 	thekey.onDown.add(settoTrue, this);
 	game.state.disableVisibilityChange = true;
-
-    
-    
-
     //Iniciamos fisicas , objetos y controles
 
     initPhysics();
     initThings();
     initInput();
-
+    
+    //añadimos los sprites de la cuenta atrás que aparecen al iniciar la partida
     the3 = game.add.sprite(-45, player.body.y, "the3");
     the2 = game.add.sprite(-45, player.body.y, "the2");
     the1 = game.add.sprite(-45, player.body.y, "the1");
@@ -1005,9 +1003,9 @@ Jesus.levelState.prototype = {
     //Creamos el timer
     timeDisplay = game.time.create(false);
     timeDisplay.loop(1000, updateCounter, this); //Indicamos cada cuanto hace un loop y a que funcion tiene que llamar cuando lo haga
-
+  
+    //añade los sprites de los corazones dependiendo de la cantidad de vida que tiene el personaje
     console.log("maxHits es " + maxHits);
-    
     if (maxHits == 6){
     	
     	heart1 = game.add.sprite(30,10,'corazonSprite');
@@ -1030,6 +1028,9 @@ Jesus.levelState.prototype = {
     	
     
     }
+    //añadimos la imagen que indica que pulsemos q para empezar
+    press1 = game.add.sprite(570, 100, 'press1start');
+    
     
   },
   update: function() {
@@ -1046,7 +1047,15 @@ Jesus.levelState.prototype = {
 	  player2.position.y=player2posy;
 	  console.log("msg.posX" + msg.posX);
 	  console.log("player2posx" + player2posx);
+	  //le damos el valor de x e y que recibimos a la variable que usamos
+	  //para comprobar la colision
+	  auxX=player2posx;
+	  auxY=player2posy;
+	  //se actualiza el valor de la animación con la variable que viene del servidor
 	  animstate2 = player2anim; 
+	  //llamada a la funciónque actualiza la animación
+	  updatePlayer2General();
+	  console.log("player2anim(viene del server)" + player2anim)
 	  yes2isready = player2ready; 
 	 
 	  ////////////////////////////////////////////
@@ -1151,16 +1160,8 @@ Jesus.levelState.prototype = {
     game.physics.arcade.overlap(player, CHARCOS, hitCharco, null, this);
     game.physics.arcade.overlap(player, META, hitMeta, null, this);
 
-    //Aqui es donde subimos la info del jugador local y recuperamos la del jugador online para actualizarla
-
-  
-
- 
-
+    //comprobamos si los jugadores han colisionado
     colisionJugadores();
-    //llama a la funcion para actualizar al jugador 2
-    updatePlayer2General();
-    console.log ("ANIMSTATE2 ES " + animstate2)
     //Por ultimo comprobamos si el jugador online ha muerto
     if (muerto2 && !alreadydead2) {
     alreadydead2 = true; 
@@ -1173,6 +1174,7 @@ Jesus.levelState.prototype = {
    console.log("EQUIS DE: "+ player.body.position.x);
    console.log("IGRIEGA: " + player.body.position.y);
    console.log("");
+ //Aqui es donde subimos la info del jugador local y recuperamos la del jugador online para actualizarla
     var data = {
     	
         	"type" :  "UPDATE",

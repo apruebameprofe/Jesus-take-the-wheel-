@@ -118,7 +118,9 @@ ws.onmessage = function (message) {
           player2dead = msg.dead;
           player2winner = msg.winner;
           player2rand = msg.ourrandom;
+          
           player2anim = msg.Animation;
+          
           player2angle = msg.angulo; 
       	  console.log("is it asigned ?? " + player2posx + " " + player2posy)
           

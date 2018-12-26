@@ -22,7 +22,6 @@ Jesus.preloadState.prototype = {
        game.load.spritesheet('racersprite','../assets/images/corredores.png',60,60);
 
        game.load.image('gameover','../assets/images/gameover.png');
-     //  game.load.image('playbuttonsprite','../assets/images/play.png');
        game.load.tilemap('mapatest','../assets/Pista 1/Mapa1_road.csv');
        game.load.tilemap('mapabombas','../assets/Pista 1/Mapa1_sustitucion.csv');
        game.load.tilemap('cliffs','../assets/Pista 1/Mapa1_cliffs.csv');
@@ -40,8 +39,8 @@ Jesus.preloadState.prototype = {
        game.load.image('the2','../assets/images/the2.png');
        game.load.image('the1','../assets/images/the1.png');
        game.load.image('thego','../assets/images/thego.png');
-
-
+       game.load.image('press1Start','../assets/images/1Start.png');
+     
        game.load.spritesheet('aceite','../assets/images/aceite.png',45,45);
        game.load.image('tiletest','../assets/images/TilesetDefinitivo.png');
        //game.load.image('tileaux','../assets/images/tilesAuxiliares.png');

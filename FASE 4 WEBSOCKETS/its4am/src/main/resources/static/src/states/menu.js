@@ -24,7 +24,6 @@ Jesus.menuState.prototype = {
         game.world.setBounds(0,0,800,600); 
         var menubackground = game.add.sprite(game.world.X,game.world.Y,'A');
         var playbutton = game.add.sprite( game.world.centerX+100 , game.world.centerY+100, 'play2');
-       
         playbutton.anchor.setTo(0.5);
         
         
