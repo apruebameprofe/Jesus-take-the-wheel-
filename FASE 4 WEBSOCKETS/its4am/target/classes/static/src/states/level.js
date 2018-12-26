@@ -4,8 +4,6 @@ Jesus.levelState = function(game) {
 var heart1;
 var heart2;
 var heart3;
-
-
 var BOMBAS; //Colisión de grupo para los objetos del nivel
 var VALLASRECTAS;
 var VALLASDERECHA;
@@ -520,11 +518,10 @@ function updatePlayer2General() {
 	    player2.animations.play("dizzy2");
 	   
 	  }
-
+  
 
  
 }
-
 //checkSpeed se llama cuando el jugador está en una tile de salto , si su velocidad es demasiado baja lo tira
 function checkSpeed(player) {
   if (player.body.velocity.y < velpunta - 50) {
@@ -813,11 +810,7 @@ function initPlayer() {
   
   
 if (ownid == 1 ){    player = game.add.sprite(570, 100, "racersprite", subchar[0]);}
-if (ownid == 2 ){    player = game.add.sprite(400, 100, "racersprite", subchar[0]);}
-
-  
-  
-
+else if (ownid == 2 ){ player = game.add.sprite(400, 100, "racersprite", subchar[0]);}
   player.anchor.set(0.5);
   game.physics.arcade.enable(player);
   player.body.bounce.set(0.001);
@@ -847,13 +840,10 @@ function initPlayer2() {
 
 if(ownid == 1){
   player2 = game.add.sprite(400, 100, "racersprite", subchar2[0]);
-}
-if(ownid == 2){
+}else if(ownid == 2){
  
     player2 = game.add.sprite(570, 100, "racersprite", subchar2[0]);
 }
-  
- 
   player2.anchor.set(0.5);
   firstangle2 = player2.angle;
   player2.animations.add("recto2", [subchar2[0], subchar2[1]], 10, true);
@@ -918,6 +908,9 @@ function allowMovement() {
   console.log("moving! ");
   player.body.moves = true;
   player.body.immovable = false;
+//permitir que el segundo jugador se mueva
+  player2.moves= true;
+  player2.immovable =false;
   timeDisplay.start(); //Tambien activa el timer
 }
 function tweenAndStart() {
@@ -973,35 +966,23 @@ Jesus.levelState.prototype = {
     //Lo primero es crear la escena antes que el personaje (tema de capas)
     initStage();
     initPlayer();
-    
-       
-
-
-    var auxid;
-
-    pistaSelect = 1
-    console.log(pistaSelect);
-    
     //initPlayer2(); 
-   
-   
-
+    var auxid;
   },
 
   preload: function() {
 	  
 	  desesperacion = player2kart;
-	  
-	  
+	 
   },
   create: function() {
-	  
-	  thekey = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-	   thekey.onDown.add(settoTrue, this);
+	initPlayer2();  
+	thekey = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+	thekey.onDown.add(settoTrue, this);
 	game.state.disableVisibilityChange = true;
 
     
-    initPlayer2();
+    
 
     //Iniciamos fisicas , objetos y controles
 
@@ -1054,13 +1035,16 @@ Jesus.levelState.prototype = {
 	  
 	  
 	  console.log ("Is this working? why not? " + player2posx + " " + player2posy);
+	  //posicion del player 2
 	  
-	  player2.position.X = player2posx;
-	  player2.position.Y = player2posy;
-	  animstate2 = player2anim; 
-	  yes2isready = player2ready; 
+	  /////////////////////cosas del player2/////////
 	  
 	 
+	  animstate2 = player2anim; 
+	  yes2isready = player2ready; 
+	  updatePlayer2General();
+	  ////////////////////////////////////////////
+	  
 	  if(maxHits == 6){
 		  if(wallHits == 6){
 			  heart1.alpha = 1; 
@@ -1104,16 +1088,9 @@ Jesus.levelState.prototype = {
 		heart1.alpha = 0;
 		  }
 	    }
-	  
-	 
-
-	   
-		   
 		    console.log("2x : " + player2.position.x);
 		    console.log("2y : " + player2.position.y);
-	  
-	  
-	  
+		    
 	  if(yesimready == 1 && yes2isready == 1){
 		  raceStart = true; 
 	  }
@@ -1175,6 +1152,7 @@ Jesus.levelState.prototype = {
  
 
     colisionJugadores();
+    //llama a la funcion para actualizar al jugador 2
     updatePlayer2General();
     console.log ("ANIMSTATE2 ES " + animstate2)
     //Por ultimo comprobamos si el jugador online ha muerto
@@ -1190,30 +1168,31 @@ Jesus.levelState.prototype = {
    console.log("IGRIEGA: " + player.body.position.y);
    console.log("");
     var data = {
-    		
-    		
-    		
-    		
+    	
         	"type" :  "UPDATE",
         	"subtype" : "UPDATE_STATE",
         	"ID": ownid,
         	"posX" : player.body.position.x,
         	"posY" : player.body.position.y,
+        	"pos2X" : player2.position.X,
+        	"pos2Y" : player2.position.Y,
         	"dead" : muerto,
         	"winner" : ganado,
         	"Kart" : charSelect,
         	"angulo" : player.angle,
         	"Animation" : animstate,
+        	"Animation2" : animstate2,
         	"ready" : yesimready
         	
-        		
+        	
         }
     
     ws.send(JSON.stringify(data));
     
-    
+    player2.position.X = player2posx;
+    player2.position.Y = player2posy;
     
   },
-
+ 
 
 }

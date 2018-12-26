@@ -53,36 +53,5 @@ public class gameController {
 		}
 	}
 	
-
-	
-	/*
-	public ResponseEntity<Racer> getRacer(@PathVariable long id) {
-		Racer player = racers.get(id);
-		if (player != null) {
-			return new ResponseEntity<>(player, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	
-
-
-	
-	// Con este PUT actualizamos la informaciÃ³n del jugador con ID = id
-	@PutMapping(value = "/game/{id}")
-	public ResponseEntity<Racer> updateRacer(@PathVariable long id, @RequestBody Racer player) {
-		Racer savedPlayer = racers.get(player.getID());
-		if (savedPlayer != null) {
-			racers.put(id, player);
-			return new ResponseEntity<>(player, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	
-	*/
-	
 	
 }

@@ -2,22 +2,22 @@ debug = {
     ws: 1
 }
 
-var ws = new WebSocket('ws://192.168.1.196:8080/jesus');
+var ws = new WebSocket('ws://192.168.1.39:8080/jesus');
 
 
 var numplayers; 
 var ownid; 
 var ourrandomserv;
 
-var player2rand;
-var player2kart; 
-var player2posx;
-var player2posy; 
-var player2dead;
-var player2winner;
-var player2anim;
-var player2angle = 0;
-var player2ready = 0; 
+ player2rand=0;
+ player2kart=0; 
+ player2posx=0;
+ player2posy=0; 
+ player2dead=true;
+ player2winner=false;
+ player2anim=0;
+ player2angle = 0;
+ player2ready = 0; 
 
 
 var yesselectedKart = false; 
@@ -89,8 +89,10 @@ ws.onmessage = function (message) {
           
             console.log('id: ' + msg.ID)
             console.log('pos: (' + msg.posX + ',' + msg.posY + ')')
+            console.log('pos2: (' + msg.pos2X + ',' + msg.pos2Y + ')')
             console.log('kart: ' + msg.Kart)
             console.log('anim: ' + msg.Animation)
+             console.log('anim2: ' + msg.Animation2)
             console.log('rand: ' + msg.ourrandom)
             console.log('ang: ' + msg.angulo)
             console.log('dead: ' + msg.dead)

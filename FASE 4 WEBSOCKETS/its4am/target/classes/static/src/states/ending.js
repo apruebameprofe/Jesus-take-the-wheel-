@@ -62,7 +62,7 @@ Jesus.endingState.prototype = {
     	if(clickedend){
             
             clickedend = false; 
-            
+            //hacer que se cree un nuevo jugador al darle al botón, hacer llamada al server?
         game.state.start('menuState');
         }
      

@@ -37,7 +37,7 @@ Jesus.matchmakingState.prototype = {
     	        	"posX" : 500,
     	        	"posY" : 500,
     	        	"dead" : false,
-    	        	"winner" : ganado,
+    	        	"winner" : false,
     	        	"Kart" : perSelect,
     	        	"angulo" : 0,
     	        	"Animation" : 1,
