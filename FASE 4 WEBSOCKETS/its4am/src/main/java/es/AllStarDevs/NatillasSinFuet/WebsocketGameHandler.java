@@ -35,7 +35,7 @@ JsonNode globalPlayer2 = mapper.createObjectNode();
 public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 	sessions.add(session);
 }
-
+//esto hace un remove??? mirarlo bien
 public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 	sessions.remove(session);
 }
@@ -70,7 +70,7 @@ protected void handleTextMessage(WebSocketSession session, TextMessage message) 
 				
 				//json.putPOJO("player", player);
 			} else {
-				json.put("type", "GAME_CPMPLETE");
+				json.put("type", "GAME_COMPLETE");
 			}
 			session.sendMessage(new TextMessage(json.toString()));
 

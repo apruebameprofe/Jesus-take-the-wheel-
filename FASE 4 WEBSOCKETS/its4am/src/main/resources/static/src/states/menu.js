@@ -9,7 +9,7 @@ function listener (){
 }
 
 Jesus.menuState.prototype = {
-    //borra el jugador al llegar al menu , util cuando recargamos el juego 
+
 		init: function() {
 			
 		},
@@ -36,10 +36,14 @@ Jesus.menuState.prototype = {
 
     update: function() {
     if(clicked){
-        
-        clicked = false; 
-        
-    game.state.start('charselState');
+    	clicked = false; 
+    	if (isFull){
+        	game.state.start('fullServerState');
+        	console.log("esta lleno?: "+ isFull);
+    	} else{
+    		 game.state.start('charselState');
+    	}
+ 
     }
     }
 }

@@ -7,7 +7,7 @@ var msg;
 var numplayers; 
 var ownid; 
 var ourrandomserv;
-
+var isFull=false;
  player2rand=0;
  player2kart=0; 
  player2posx=400;
@@ -38,6 +38,11 @@ ws.onerror = function (error) {
 ws.onclose = function (event) {
     if (debug.ws) {
         console.log('[DEBUG-WS] Se ha cerrado la conexion.')
+        console.log('[DEBUG-WS] El jugador se va a borrar.') 
+        ownid=0;
+    	
+    
+        
     }
 }
 
@@ -66,22 +71,16 @@ ws.onmessage = function (message) {
         
             ourrandomserv = msg.player.ourrandom;  	
             ownid = msg.player.ID;
-            
-           
-            
+          
             break
-            
-        
-    
+
         case "GAME_COMPLETE":
             console.log('##### GAME IS COMPLETE #####')
+            isFull=true;
             break
     }
     switch(msg.subtype){
   
-    //no entra en esta condición
-   
-          
         case "UPDATE_STATE":
             console.log('!!!!! GAME SENDS UPDATE !!!!!')
           
