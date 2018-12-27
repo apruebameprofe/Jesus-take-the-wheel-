@@ -39,7 +39,7 @@ Jesus.preloadState.prototype = {
        game.load.image('the2','../assets/images/the2.png');
        game.load.image('the1','../assets/images/the1.png');
        game.load.image('thego','../assets/images/thego.png');
-       game.load.image('press1Start','../assets/images/1Start.png');
+       game.load.image('press1Start','../assets/images/start.png');
      
        game.load.spritesheet('aceite','../assets/images/aceite.png',45,45);
        game.load.image('tiletest','../assets/images/TilesetDefinitivo.png');

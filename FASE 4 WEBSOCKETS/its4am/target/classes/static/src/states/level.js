@@ -985,7 +985,7 @@ Jesus.levelState.prototype = {
   preload: function() {
 	  
 	  desesperacion = player2kart;
-	  press1 = game.add.sprite(750, 50, 'press1start');
+	  press1 = game.add.sprite(650, 50, 'press1Start');
 	  
   },
   create: function() {
