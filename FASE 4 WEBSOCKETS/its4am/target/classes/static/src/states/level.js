@@ -918,7 +918,7 @@ function allowMovement() {
 function tweenAndStart() {
   //Funcion que lleva la animacion de salida , llama a la funcion que activa el movimiento cuando el tween de la animaci
   console.log("TweenAndSTart");
-  raceStart = true;
+  //raceStart = true;
 
 
   var the3tween = game.add
@@ -954,6 +954,11 @@ function settoTrue(){
 	yesimready = 1; 
 }
 //función que comprueba si se ha pulsado la tecla y hace que deje de verse el texto
+function weready(){
+	  if(yesimready == 1 && yes2isready == 1){
+		  raceStart = true; 
+	  }
+}  
 function pulsaUno(){
 	  if(yesimready==1){
 		  press1.visible=false;
@@ -1116,9 +1121,8 @@ Jesus.levelState.prototype = {
 		    console.log("2x : " + player2.position.x);
 		    console.log("2y : " + player2.position.y);
 		    
-	  if(yesimready == 1 && yes2isready == 1){
-		  raceStart = true; 
-	  }
+		  
+	  
 	  game.debug.spriteInfo(player, 32, 32);
 	  game.debug.spriteInfo(player2, 32, 130);
 
@@ -1135,6 +1139,8 @@ Jesus.levelState.prototype = {
     checkDaño(); //Comprueba el daño
     
     pulsaUno(); //comprueba si se ha pulsado 1
+    
+    weready();  //comprueba si los dos jugadores estan listos
     //Muestra el timer con la funcionalidad de debug
     game.debug.text(":" + timeDisplay.duration.toFixed(0) / 10, 86, 32);
     game.debug.text(":" + total, 64, 32);

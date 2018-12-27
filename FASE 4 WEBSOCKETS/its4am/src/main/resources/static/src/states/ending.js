@@ -65,6 +65,7 @@ Jesus.endingState.prototype = {
             player2anim = 1;
             player2ready = 0;
             yes2isready=0;
+            raceStart= false;
             
             console.log("WALUIGI");
             console.log("ready jug 1:" +yesimready);
