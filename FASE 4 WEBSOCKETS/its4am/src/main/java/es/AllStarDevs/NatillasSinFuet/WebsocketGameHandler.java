@@ -17,11 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.AllStarDevs.NatillasSinFuet.gameController;
+import es.AllStarDevs.NatillasSinFuet.Racer;
 
 
 public class WebsocketGameHandler extends TextWebSocketHandler {
+	private Map<String, Racer> players = new ConcurrentHashMap<>();
 	
-
 
 private static Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<WebSocketSession>());
 ObjectMapper mapper = new ObjectMapper();
@@ -32,14 +33,22 @@ gameController gameController = new gameController();
 JsonNode globalPlayer1 = mapper.createObjectNode();
 JsonNode globalPlayer2 = mapper.createObjectNode();
 
+
+private int auxJugadores=0;
+
 public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 	sessions.add(session);
+	
 }
-//esto hace un remove??? mirarlo bien
+//esto hace un remove
 public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-	sessions.remove(session);
-}
-
+	sessions.remove(session.getId());
+	players.remove(session.getId());
+	auxJugadores = gameController.getRacers().size();
+	auxJugadores--;
+	auxJugadores=gameController.getRacers().size();
+	
+	}
 protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
 	synchronized (sessions) {
