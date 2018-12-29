@@ -50,6 +50,7 @@ public class gameController {
 		Racer saved = racers.get(id);
 		if (saved != null) {
 			racers.remove(saved.getID());
+			players--;
 		}
 	}
 	
