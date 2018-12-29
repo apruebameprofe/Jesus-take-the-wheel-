@@ -25,8 +25,6 @@ Jesus.menuState.prototype = {
         var menubackground = game.add.sprite(game.world.X,game.world.Y,'A');
         var playbutton = game.add.sprite( game.world.centerX+100 , game.world.centerY+100, 'play2');
         playbutton.anchor.setTo(0.5);
-        
-        
         playbutton.inputEnabled = true;
         playbutton.events.onInputDown.add(listener, this);
         
@@ -35,6 +33,8 @@ Jesus.menuState.prototype = {
     },
 
     update: function() {
+    	//si clickamos el boton y el servidor esta lleno nos lleva al estado de servidor lleno
+    	//y si no nos lleva a la selección de personaje
     if(clicked){
     	clicked = false; 
     	if (isFull){

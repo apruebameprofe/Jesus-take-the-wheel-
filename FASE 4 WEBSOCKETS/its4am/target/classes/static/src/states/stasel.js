@@ -1,5 +1,7 @@
 Jesus.staselState = function(game) {
 }
+//este estado ya no se utiliza porque la pista en la que se va a jugar se elige de forma automática
+//y aleatoria
 var hitsAvailable;
 var speedAvailable;
 var pistaSelect = 1; 

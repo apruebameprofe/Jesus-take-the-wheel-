@@ -1,5 +1,6 @@
 Jesus.fullServerState = function(game) {
-
+//este estado solo muestra que el servidor esta lleno, para comprobar si sigue estandolo
+	//se recarga la página y ya esta
 }
 Jesus.fullServerState.prototype = {
 

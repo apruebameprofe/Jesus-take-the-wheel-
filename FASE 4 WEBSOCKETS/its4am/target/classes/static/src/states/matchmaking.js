@@ -10,13 +10,6 @@ function setstartgametrue(){
 Jesus.matchmakingState.prototype = {
 		
 		init: function () {
-		/*
-			
-					console.log ('==========================================================');
-					console.log ('= El servidor está lleno. Vuelve a intentarlo más tarde. =');
-					console.log ('==========================================================');
-					game.state.start('menuState');
-				*/
 		},
     
     preload: function() {
@@ -24,18 +17,18 @@ Jesus.matchmakingState.prototype = {
     },
 
     create: function() {
-    	
+    	//añadimos el fondo
     	var fondo = game.add.sprite(game.world.centerX , game.world.centerY, 'buscandojugadores');
     	fondo.anchor.setTo(0.5); 
     	
      
-    	
+    	//mensaje con valores por defecto
     	 var data = {
     			 "type" :  "UPDATE",
     	        	"subtype" : "UPDATE_STATE",
     	        	"ID": ownid,
     	        	"posX" : 500,
-    	        	"posY" : 500,
+    	        	"posY" : 100,
     	        	"dead" : false,
     	        	"winner" : false,
     	        	"Kart" : perSelect,
@@ -53,7 +46,8 @@ Jesus.matchmakingState.prototype = {
     },
 
     update: function() {
-    	
+    		//se comprueba si se ha elegido ya un kart y si el timer se ha acabado y si es así se pasa
+    		// a level
     			if(yesselectedKart && timetostart){
 				console.log ('##### COMIENZA EL JUEGO #####');
 				game.state.start('levelState');

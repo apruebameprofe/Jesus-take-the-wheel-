@@ -60,11 +60,8 @@ var charArray = [
 ];
 
 var perSelect2;
-
 var tacked = false;
-
 var ID2;
-
 var colisionPer = false; 
 
 //Velocidad punta   y velocidad minima
@@ -500,7 +497,7 @@ function movePlayerDown() {
   }
 }
 
-//Funcion no usada aun , se usara para llevar las animaciones del jugador 2
+//Funcion para llevar las animaciones del jugador 2
 function updatePlayer2General() {
   if (animstate2 = 1) {
     player2.animations.play("recto2");
@@ -836,13 +833,12 @@ else if (ownid == 2 ){ player = game.add.sprite(400, 100, "racersprite", subchar
 }
 //Inicia al jugador 2
 function initPlayer2() {
-
   subchar2 = charArray[desesperacion];
 
+  //añade el sprite en la posición inicial en función de la id
 if(ownid == 1){
   player2 = game.add.sprite(400, 100, "racersprite", subchar2[0]);
 }else if(ownid == 2){
- 
     player2 = game.add.sprite(570, 100, "racersprite", subchar2[0]);
 }
   player2.anchor.set(0.5);
@@ -978,7 +974,7 @@ Jesus.levelState.prototype = {
     //Lo primero es crear la escena antes que el personaje (tema de capas)
     initStage();
     initPlayer();
-    //initPlayer2(); 
+    
     var auxid;
   },
 
@@ -1042,17 +1038,9 @@ Jesus.levelState.prototype = {
     	
     
     }
-    //añadimos la imagen que indica que pulsemos q para empezar
-  
- 
-  
     
   },
   update: function() {
-	  
-	  
-	  console.log ("Is this working? why not? " + player2posx + " " + player2posy);
-	  //posicion del player 2
 	  
 	  /////////////////////cosas del player2/////////
 	  
@@ -1074,7 +1062,7 @@ Jesus.levelState.prototype = {
 	  yes2isready = player2ready; 
 	 
 	  ////////////////////////////////////////////
-	  
+	  //indica la cantidad de corazones que tenemos en función de los wallHits
 	  if(maxHits == 6){
 		  if(wallHits == 6){
 			  heart1.alpha = 1; 
@@ -1118,13 +1106,9 @@ Jesus.levelState.prototype = {
 		heart1.alpha = 0;
 		  }
 	    }
-		    console.log("2x : " + player2.position.x);
-		    console.log("2y : " + player2.position.y);
-		    
-		  
-	  
-	  game.debug.spriteInfo(player, 32, 32);
-	  game.debug.spriteInfo(player2, 32, 130);
+
+	  //game.debug.spriteInfo(player, 32, 32);
+	  //game.debug.spriteInfo(player2, 32, 130);
 
     if (raceStart) {
       tweenAndStart();
@@ -1142,9 +1126,9 @@ Jesus.levelState.prototype = {
     
     weready();  //comprueba si los dos jugadores estan listos
     //Muestra el timer con la funcionalidad de debug
-    game.debug.text(":" + timeDisplay.duration.toFixed(0) / 10, 86, 32);
-    game.debug.text(":" + total, 64, 32);
-    game.debug.text(minutos, 32, 32);
+    //game.debug.text(":" + timeDisplay.duration.toFixed(0) / 10, 86, 32);
+    //game.debug.text(":" + total, 64, 32);
+    //game.debug.text(minutos, 32, 32);
 
     //TODAS LAS COLISIONES
     game.physics.arcade.overlap(player, CAIDAS, checkSpeed, null, this);
@@ -1173,7 +1157,6 @@ Jesus.levelState.prototype = {
       this
     );
     game.physics.arcade.overlap(player, CORAZONES, hitCorazon, null, this);
-
     game.physics.arcade.overlap(player, CHARCOS, hitCharco, null, this);
     game.physics.arcade.overlap(player, META, hitMeta, null, this);
 
@@ -1210,8 +1193,8 @@ Jesus.levelState.prototype = {
         	"Animation" : animstate,
         	"Animation2" : animstate2,
         	"ready" : yesimready,
-        	"ready2" : yes2isready
-        	
+        	"ready2" : yes2isready,
+        	"timer"  : timer
         	
         }
     

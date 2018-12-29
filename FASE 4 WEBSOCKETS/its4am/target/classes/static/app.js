@@ -12,11 +12,12 @@ var isFull=false;
  player2kart=0; 
  player2posx=400;
  player2posy=100; 
- player2dead=true;
+ player2dead=false;
  player2winner=false;
  player2anim=0;
  player2angle = 0;
- player2ready = 0; 
+ player2ready = 0;
+ player2Timer=0;
 var yesselectedKart = false;
 
 //cuando se abre la conexión se utiliza esta función
@@ -127,7 +128,8 @@ ws.onmessage = function (message) {
             		player2winner = msg.winner;
             		player2rand = msg.ourrandom;
             		player2anim = msg.Animation;
-            		player2angle = msg.angulo; 
+            		player2angle = msg.angulo;
+            		player2Timer = msg.timer;
             		console.log("is it asigned ?? " + player2posx + " " + player2posy)
             		console.log("EL READY " + msg.ready);
             		console.log("a ver yesimready2 que haces: " + msg.ready);
