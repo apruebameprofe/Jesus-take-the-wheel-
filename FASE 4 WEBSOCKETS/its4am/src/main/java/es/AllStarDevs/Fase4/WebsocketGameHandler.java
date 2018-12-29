@@ -1,4 +1,4 @@
-package es.AllStarDevs.NatillasSinFuet;
+package es.AllStarDevs.Fase4;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import es.AllStarDevs.NatillasSinFuet.gameController;
-import es.AllStarDevs.NatillasSinFuet.Racer;
+import es.AllStarDevs.Fase4.Racer;
+import es.AllStarDevs.Fase4.gameController;
 
 
 public class WebsocketGameHandler extends TextWebSocketHandler {
@@ -91,8 +91,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						session1.sendMessage(message);
 					}
 			break; 
-	
-			
+
 		default:
 			break;
 		}

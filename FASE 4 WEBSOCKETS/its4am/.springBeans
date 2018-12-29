@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:es.AllStarDevs.NatillasSinFuet.App</config>
+		<config>java:es.AllStarDevs.Fase4.App</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

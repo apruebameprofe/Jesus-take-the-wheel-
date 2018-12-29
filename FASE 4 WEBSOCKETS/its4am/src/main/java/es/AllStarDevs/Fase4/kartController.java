@@ -1,9 +1,8 @@
-package es.AllStarDevs.NatillasSinFuet;
+package es.AllStarDevs.Fase4;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
-import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -20,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-public class OBJSController {
+public class kartController {
 
+	Map<Long, Kart> karts = new ConcurrentHashMap<>();
+	AtomicLong nextkartId = new AtomicLong(0);
+	Random rnd = new Random();
 	
-		}
-	
+}

@@ -1065,24 +1065,24 @@ Jesus.levelState.prototype = {
 	  //indica la cantidad de corazones que tenemos en función de los wallHits
 	  if(maxHits == 6){
 		  if(wallHits == 6){
-			  heart1.alpha = 1; 
-				heart2.alpha = 1;
-				heart3.alpha = 1;
+			  	heart1.alpha = 0; 
+				heart2.alpha = 0;
+				heart3.alpha = 0;
 		  }
 		  if(wallHits == 4){
 				heart1.alpha = 1; 
-				heart2.alpha = 1;
+				heart2.alpha = 0;
 				heart3.alpha = 0;
 		  }
 		  if(wallHits == 2){
 				heart1.alpha = 1; 
-				heart2.alpha = 0;
+				heart2.alpha = 1;
 				heart3.alpha = 0;
 		  }
 		  if(wallHits == 0){
-				heart1.alpha = 0; 
-				heart2.alpha = 0;
-				heart3.alpha = 0;
+				heart1.alpha = 1; 
+				heart2.alpha = 1;
+				heart3.alpha = 1;
 		  }
 	  }
 	  
@@ -1092,18 +1092,21 @@ Jesus.levelState.prototype = {
 		heart2.alpha = 0;
 		  }
 		 if(wallHits == 4){
-			 heart2.alpha = 1;
-			 heart1.alpha = 1; 
+			 heart2.alpha = 0;
+			 heart1.alpha = 0; 
 		 }
 		 if(wallHits == 0 ){
-			 heart2.alpha = 0;
-			 heart1.alpha = 0;
+			 heart2.alpha = 1;
+			 heart1.alpha = 1;
 		 }
 	    }
 	  
 	  if (maxHits == 2){    
 		  if(wallHits == 0){
-		heart1.alpha = 0;
+		heart1.alpha = 1;
+		  }
+		  if(wallHits==2){
+			  heart1.alpha=0;
 		  }
 	    }
 
