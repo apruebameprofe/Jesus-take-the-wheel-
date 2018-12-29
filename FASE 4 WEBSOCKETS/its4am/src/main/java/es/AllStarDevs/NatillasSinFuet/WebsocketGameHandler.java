@@ -30,16 +30,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	gameController gameController = new gameController();
 	JsonNode globalPlayer1 = mapper.createObjectNode();
 	JsonNode globalPlayer2 = mapper.createObjectNode();
-	private int auxJugadores=0;
+	private int auxJugadores = 0;
 
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessions.add(session);
 	
 	}
-	//esto hace un remove
+	//al desconectarse el jugadores la variable auxiliar que comprueba el tamaño decrece
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session);
-		auxJugadores = gameController.getRacers().size();
 		auxJugadores--;
 	
 	
@@ -50,10 +49,14 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		synchronized (sessions) {
 			JsonNode node = mapper.readTree(message.getPayload());
 			ObjectNode json = mapper.createObjectNode();
-
+			//si tenemos menos de dos jugadores empieza la partida y si tenemos más 
+			//enviamos un mensaje de que el server esta lleno
+			//la comprobación se hace comparando un valor que se va actualizando en 
+			//función de los jugadores que intentan conectarse
+			//concetados
 			switch (node.get("type").asText()) {
 				case "JOIN":
-					if (auxJugadores < 2) {
+					if (auxJugadores <=1 ) {
 						Racer player = gameController.newRacer();
 						ObjectNode jsonPlayer = mapper.createObjectNode();
 						jsonPlayer.put("ID", player.getID());
@@ -72,8 +75,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						auxJugadores++;
 
 					} else {
+						//server lleno
 						json.put("type", "GAME_COMPLETE");
 						json.put("auxJugadores", auxJugadores);
+						auxJugadores++;
 					}
 						session.sendMessage(new TextMessage(json.toString()));
 
