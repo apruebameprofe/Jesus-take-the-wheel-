@@ -78,7 +78,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						//server lleno
 						json.put("type", "GAME_COMPLETE");
 						json.put("auxJugadores", auxJugadores);
-						auxJugadores++;
+						auxJugadores = 2; 
 					}
 						session.sendMessage(new TextMessage(json.toString()));
 

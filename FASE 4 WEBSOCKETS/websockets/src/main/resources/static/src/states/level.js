@@ -38,6 +38,7 @@ var layer3;
 var caidamap;
 var cliffmap;
 var metamap;
+var lastanimplayed = 1; 
 var subchar;
 var subchar2;
 var player; //Variable jugador
@@ -258,7 +259,7 @@ function updateGravity(eny, enx) {
 //Estas 4 funciones son para el control de las animaciones que realiza el juador cuando choca con un objeto
 function stopforme() {
   player.animations.play("recto");
-  animstate = 0;
+  animstate = 1;
 }
 
 function spinforme() {
@@ -499,25 +500,28 @@ function movePlayerDown() {
 
 //Funcion para llevar las animaciones del jugador 2
 function updatePlayer2General() {
+console.log("Entra en la funcion de las animaciones"); 
+if (animstate2 != lastanimplayed){
   if (animstate2 = 1) {
     player2.animations.play("recto2");
+    lastanimplayed = 1; 
 
   }
   if (animstate2 = 2) {
     player2.animations.play("derecha2");
-   
+   lastanimplayed = 2; 
   }
   
   if (animstate2 = 3) {
 	    player2.animations.play("izquierda2");
-	   
+	   lastanimplayed = 3; 
 	  }
   if (animstate2 = 4) {
 	    player2.animations.play("dizzy2");
-	   
+	   lastanimplayed = 4; 
 	  }
   
-
+}
  
 }
 //checkSpeed se llama cuando el jugador está en una tile de salto , si su velocidad es demasiado baja lo tira
@@ -828,7 +832,7 @@ else if (ownid == 2 ){ player = game.add.sprite(400, 100, "racersprite", subchar
     true
   );
   player.animations.play("recto");
-  animstate = 0;
+  animstate = 1;
 
 }
 //Inicia al jugador 2
@@ -1056,6 +1060,7 @@ Jesus.levelState.prototype = {
 	  auxY=player2posy;
 	  //se actualiza el valor de la animación con la variable que viene del servidor
 	  animstate2 = player2anim; 
+	  console.log("La enesima " + animstate2);
 	  //llamada a la funciónque actualiza la animación
 	  updatePlayer2General();
 	  console.log("player2anim(viene del server)" + player2anim)
@@ -1179,6 +1184,8 @@ Jesus.levelState.prototype = {
    console.log("");
    console.log("a ver yesimready que haces: " + yesimready);
    
+  
+   
  //Aqui es donde subimos la info del jugador local y recuperamos la del jugador online para actualizarla
     var data = {
     	
@@ -1206,6 +1213,7 @@ Jesus.levelState.prototype = {
     
     
   },
+ 
  
 
 }

@@ -2,7 +2,7 @@ debug = {
     ws: 1
 }
 //variables globales
-var ws = new WebSocket('ws://192.168.1.39:8080/jesus');
+var ws = new WebSocket('ws://192.168.1.38:8080/jesus');
 var msg; 
 var numplayers; 
 var ownid; 
@@ -114,7 +114,7 @@ ws.onmessage = function (message) {
             console.log('LA ID QUE ENVIO ES:'+msg.ID)
             console.log('');
             
-            //recivimos el mensaje con la información del jugador contra el que jugamos
+            //recibimos el mensaje con la información del jugador contra el que jugamos
             	if(msg.ID != ownid){
             		console.log("MESSAGE CAME FROM PLAYER 2 , UPDATING")
             		console.log("La x2 :" + msg.posX);
