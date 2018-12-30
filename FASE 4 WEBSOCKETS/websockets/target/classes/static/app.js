@@ -113,8 +113,7 @@ ws.onmessage = function (message) {
             		console.log("La x2 :" + msg.posX);
             		console.log("La y2 :" + msg.posY);
             		console.log('kart2:' + msg.Kart);
-            		console.log('dead2:' + player2dead);
-            		console.log('anim2:' + player2anim);
+            		console.log('dead:' + player2dead);
             		player2kart = msg.Kart;
             		player2posx = msg.posX;
             		player2posy = msg.posY;

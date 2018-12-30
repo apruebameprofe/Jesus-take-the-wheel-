@@ -86,10 +86,6 @@ Jesus.preloadState.prototype = {
       game.load.audio('carrera','../assets/music/carrera.wav');
       game.load.audio('inicio','../assets/music/inicioSeleccion.wav');
       game.load.audio('fin','../assets/music/ending.wav');
-      game.load.audio('boom','../assets/music/bomb.wav');
-      game.load.audio('health','../assets/music/health.wav');
-      game.load.audio('crash','../assets/music/crash.wav');
-      game.load.audio('slip','../assets/music/slip.wav');
     },
 
     create: function() {
