@@ -2,6 +2,7 @@ Jesus.menuState = function(game) {
 
 }
 var clicked = false;
+var music2;
 function listener (){
     console.log("click!");
  clicked = true;
@@ -12,6 +13,9 @@ Jesus.menuState.prototype = {
 
 		init: function() {
 			
+			music2 = game.add.audio('inicio');
+			music2.play();
+			music2.loopFull(0.6);
 		},
     preload: function() {
        

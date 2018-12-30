@@ -2,6 +2,7 @@ Jesus.levelState = function(game) {
 	
 };
 var player2;
+var music;
 var heart1;
 var heart2;
 var heart3;
@@ -957,16 +958,20 @@ function settoTrue(){
 function weready(){
 	  if(yesimready == 1 && yes2isready == 1){
 		  raceStart = true; 
+		 
 	  }
 }  
 function pulsaUno(){
 	  if(yesimready==1){
-		  press1.visible=false;
+		  press1.visible=false;  
 	  }
 }  
 Jesus.levelState.prototype = {
   init: function() {
-	 
+	  music = game.add.audio('carrera');
+	  music2.destroy();
+	  music.play();
+	  music.loopFull(0.6);
  
 	
     //Ponemos datos de seleccion de personaje
@@ -988,8 +993,10 @@ Jesus.levelState.prototype = {
 	  desesperacion = player2kart;
 	  press1 = game.add.sprite(650, 50, 'press1Start');
 	  
+	
   },
   create: function() {
+	
 	initPlayer2();  
 	
 	thekey = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
@@ -1168,6 +1175,7 @@ Jesus.levelState.prototype = {
     game.physics.arcade.overlap(player, CORAZONES, hitCorazon, null, this);
     game.physics.arcade.overlap(player, CHARCOS, hitCharco, null, this);
     game.physics.arcade.overlap(player, META, hitMeta, null, this);
+    
 
     //comprobamos si los jugadores han colisionado
     colisionJugadores();

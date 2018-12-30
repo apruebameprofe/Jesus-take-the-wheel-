@@ -64,6 +64,7 @@ Jesus.preloadState.prototype = {
       game.load.spritesheet('velind','../assets/images/velind.png',45,45);
       game.load.spritesheet('numeros','../assets/images/numeros.png',50,50); 
       
+      //tilemaps
       game.load.tilemap('mapatest2','../assets/Pista 2/Mapa2_road.csv');
       game.load.tilemap('mapabombas2','../assets/Pista 2/Mapa2_sustitucion.csv');
       game.load.tilemap('cliffs2','../assets/Pista 2/Mapa2_cliffs.csv');
@@ -78,6 +79,12 @@ Jesus.preloadState.prototype = {
       game.load.tilemap('cliffs3','../assets/Pista 3/Mapa3_cliffs.csv');
       game.load.tilemap('caidas3','../assets/Pista 3/Mapa3_caida.csv');
       game.load.tilemap('mapameta3','../assets/Pista 3/Mapa3_meta.csv');
+      
+      
+      //audio
+      game.load.audio('carrera','../assets/music/carrera.wav');
+      game.load.audio('inicio','../assets/music/inicioSeleccion.wav');
+      game.load.audio('fin','../assets/music/ending.wav');
     },
 
     create: function() {

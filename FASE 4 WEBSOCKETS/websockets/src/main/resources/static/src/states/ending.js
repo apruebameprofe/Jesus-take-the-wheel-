@@ -4,7 +4,7 @@ Jesus.endingState = function(game) {
 var clickedend; 
 var imgGana;
 var imgMuere;
-
+var music3;
 function listener2 (){
     console.log("click!");
     clickedend = true;
@@ -43,6 +43,10 @@ function ganaMuere(){
 Jesus.endingState.prototype = {
 	init: function() {
 		console.log("estoy en endingState");
+		music.destroy();
+		music3 = game.add.audio('fin');
+		music3.play();
+		music3.loopFull(0.6);
 			},			
     preload: function() {
     	
@@ -82,7 +86,7 @@ Jesus.endingState.prototype = {
             yes2isready=0;
             raceStart= false;
             clickedend = false; 
-      
+            music3.destroy();
             game.state.start('menuState');
 
         }

@@ -2,7 +2,7 @@ debug = {
     ws: 1
 }
 //variables globales
-var ws = new WebSocket('ws://192.168.1.38:8080/jesus');
+var ws = new WebSocket('ws://192.168.1.196:8080/jesus');
 var msg; 
 var numplayers; 
 var ownid; 
@@ -18,6 +18,7 @@ var isFull=false;
  player2angle = 0;
  player2ready = 0;
  player2Timer=0;
+ player2ID=0;
 var yesselectedKart = false;
 
 //cuando se abre la conexión se utiliza esta función
@@ -130,6 +131,7 @@ ws.onmessage = function (message) {
             		player2anim = msg.Animation;
             		player2angle = msg.angulo;
             		player2Timer = msg.timer;
+            		player2ID=msg.ID;
             		console.log("is it asigned ?? " + player2posx + " " + player2posy)
             		console.log("EL READY " + msg.ready);
             		console.log("a ver yesimready2 que haces: " + msg.ready);
