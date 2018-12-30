@@ -15,7 +15,7 @@ public class gameController {
 
 	AtomicLong nextId = new AtomicLong(0);
 	Random random = new Random(); 
-	int rnd = random.nextInt(3 - 1 + 1) +1;
+	int rnd = random.nextInt(3) +1;
 	int players = 0 ; 
 	
 
