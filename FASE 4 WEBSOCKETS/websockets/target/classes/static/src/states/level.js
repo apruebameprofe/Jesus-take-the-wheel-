@@ -3,6 +3,10 @@ Jesus.levelState = function(game) {
 };
 var player2;
 var music;
+var boom;
+var healthSound;
+var crashSound; 
+var slip;
 var heart1;
 var heart2;
 var heart3;
@@ -272,6 +276,7 @@ function spinforme() {
 //Funciones de hits contra cosas
 //hitCharco da velocidad aleatoria al jugador en una direccion y llama a las funciones que hacen que gire y pare
 function hitCharco() {
+	slip.play();
   console.log("charco");
   var velrand = game.rnd.integerInRange(-15, 15);
   console.log(velrand);
@@ -285,6 +290,7 @@ function hitCharco() {
 function hitBomba(player, bomba) {
   console.log("Bomba");
   if (bomba.frame == 0) {
+	boom.play(); 
     muertepor = "bomba";
     muerto = true;
     console.log("bomba");
@@ -306,6 +312,7 @@ function colisionJugadores(player1, player2) {
     console.log("COLISION BB");
     console.log("auxX: " + auxX);
     console.log("auxY: " + auxY);
+    crashSound.play();
 	 }}
   } else {
     console.log("NO CHOCAN ");
@@ -321,6 +328,7 @@ function colisionJugadores(player1, player2) {
 function hitVallaRecta(player, valla) {
   console.log(" ");
   if (valla.frame == 0) {
+	crashSound.play();
     console.log("Valla!");
     nextValla = true;
     wallHits++;
@@ -342,6 +350,7 @@ function hitVallaRecta(player, valla) {
 function hitVallaDerecha(player, valla) {
   console.log(" ");
   if (valla.frame == 0) {
+	crashSound.play();
     console.log("Valla!");
     nextValla = true;
     wallHits++;
@@ -363,6 +372,7 @@ function hitVallaDerecha(player, valla) {
 function hitVallaIzquierda(player, valla) {
   console.log(" ");
   if (valla.frame == 0) {
+	crashSound.play();
     console.log("Valla!");
     nextValla = true;
     wallHits++;
@@ -385,6 +395,7 @@ function hitVallaIzquierda(player, valla) {
 function hitCorazon(player, corazon) {
   console.log(" ");
   if (corazon.frame == 0) {
+	 healthSound.play();
     console.log("Corazon!");
     if (wallHits > 0) {
       wallHits--;
@@ -969,6 +980,10 @@ function pulsaUno(){
 Jesus.levelState.prototype = {
   init: function() {
 	  music = game.add.audio('carrera');
+	  boom = game.add.audio('boom');
+	  healthSound = game.add.audio('health');
+	  crashSound = game.add.audio('crash');
+	  slip = game.add.audio('slip');
 	  music2.destroy();
 	  music.play();
 	  music.loopFull(0.6);
