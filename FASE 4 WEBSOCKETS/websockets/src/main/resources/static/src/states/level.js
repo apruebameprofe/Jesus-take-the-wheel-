@@ -97,6 +97,17 @@ var go;
 var auxX;
 var auxY;
 
+
+function drawClouds(){
+	console.log("nubes");
+	for ( counter = 0 ; counter < 500 ; counter ++){
+		var randomenx = Math.floor((Math.random() * 1000) + 1);
+		var randomeny = Math.floor((Math.random() * 360000) + 1);
+		  var cloud = game.add.sprite (randomenx , randomeny ,'cutecloud');
+		
+	}
+}
+
 //La funcion que solo cambia de estado , lo separo de cualquier otra función porque cambiar de estado ganando no es lo mismo que perdiendo
 function change() {
   game.state.start("endingState");
@@ -980,6 +991,7 @@ Jesus.levelState.prototype = {
     maxHits = hitsAvailable;
     velpunta = speedAvailable;
     game.stage.backgroundColor = "#dbfff7";
+    drawClouds(); 
     
     //Lo primero es crear la escena antes que el personaje (tema de capas)
     initStage();
