@@ -970,6 +970,7 @@ Jesus.levelState.prototype = {
  
 	
     //Ponemos datos de seleccion de personaje
+	pistaSelect = ourrandomserv; 
     charSelect = perSelect;
     maxHits = hitsAvailable;
     velpunta = speedAvailable;

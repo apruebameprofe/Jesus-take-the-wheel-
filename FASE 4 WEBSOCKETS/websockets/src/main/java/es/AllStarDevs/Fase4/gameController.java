@@ -31,6 +31,7 @@ public class gameController {
 		racer.setID(id);
 		if(id == 1) {
 			randomuniversal = rnd; 
+			
 			}
 		racer.setOurrandom(randomuniversal);
 		players++;
