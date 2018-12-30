@@ -2,7 +2,7 @@ debug = {
     ws: 1
 }
 //variables globales
-var ws = new WebSocket('ws://192.168.1.196:8080/jesus');
+var ws = new WebSocket('ws://192.168.1.38:8080/jesus');
 var msg; 
 var numplayers; 
 var ownid; 

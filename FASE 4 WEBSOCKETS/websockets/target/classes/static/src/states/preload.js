@@ -20,6 +20,7 @@ Jesus.preloadState.prototype = {
        game.load.tilemap('mapameta','assets/Pista 1/Mapa1_meta.csv');
        game.load.spritesheet('metita','../assets/images/metita.png',45,45);
        game.load.spritesheet('racersprite','../assets/images/corredores.png',60,60);
+       game.load.image('cutecloud', '../assets/images/cutecloud.png');
 
        game.load.image('gameover','../assets/images/gameover.png');
        game.load.tilemap('mapatest','../assets/Pista 1/Mapa1_road.csv');
