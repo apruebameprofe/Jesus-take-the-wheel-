@@ -60,16 +60,9 @@ ws.onmessage = function (message) {
     switch (msg.type) {
     
         case "PLAYER_CREATED":
-        	//si la id que recibimos es diferente a dos(ocurre cuando un jugador previo se ha desconectado
-        	//se sustituye por una que no este en uso por otro jugador
+        	
         	ownid = msg.player.ID;
-        	if(ownid!=2 && ownid!=1){
-        		if(msg.ID==1){
-        			ownid=2;
-        		}else{
-        			ownid=1;
-        		}
-        	}
+        
         	//recibimos el mensaje de que el jugador se ha creado correctamente y su información inicial
             console.log('@@@@@@ PLAYER CREATED @@@@@')
             console.log('id: ' + ownid)
@@ -98,7 +91,6 @@ ws.onmessage = function (message) {
     //update de la información del jugador
         case "UPDATE_STATE":
             console.log('!!!!! GAME SENDS UPDATE !!!!!')
-          
             console.log('id: ' + msg.ID)
             console.log('pos: (' + msg.posX + ',' + msg.posY + ')')
             console.log('pos2: (' + msg.pos2X + ',' + msg.pos2Y + ')')
@@ -136,11 +128,12 @@ ws.onmessage = function (message) {
             		console.log("EL READY " + msg.ready);
             		console.log("a ver yesimready2 que haces: " + msg.ready);
             		player2ready = msg.ready;
-          
+            		
             		//comprobamos si kart ha sido elegido para poder pasar del matchmaking
             			if(msg.Kart == 1 || msg.Kart == 2 || msg.Kart ==3){
             				yesselectedKart = true; 
             			}
+            			
             }
           
             break

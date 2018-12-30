@@ -58,8 +58,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				case "JOIN":
 					if (auxJugadores <2 ) {
 						Racer player = gameController.newRacer();
-							if(player.getID()>2) {
+							if(player.getID()%2==0) {
 								player.setID(2);
+							}
+							else {
+								player.setID(1);
 							}
 						ObjectNode jsonPlayer = mapper.createObjectNode();
 						jsonPlayer.put("ID", player.getID());
